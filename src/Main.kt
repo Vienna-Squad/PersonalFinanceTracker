@@ -36,7 +36,7 @@ fun showMenuItems(): MenuItem {
 }
 
 fun getTransactionIdFromUser(): Int? {
-    print("Enter transaction Id to delete: ")
+    print("Enter transaction Id to delete:  ")
     val index = Validator.isValidId(readln())
     return index
 }
