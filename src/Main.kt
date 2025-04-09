@@ -69,33 +69,51 @@ fun getUpdatedAmount(old: Double): Double? {
             print("You entered nothing. Keep \"$old\"? (y/n): ")
             if (readln().lowercase() == "y") return old else attempts++
         } else {
-            val parsed = input.toDoubleOrNull()
-            if (parsed != null && Validator.isAmountValid(parsed)) return parsed
-            println("\u001B[31mInvalid amount. Please enter a positive number. [Attempts left: ${2 - attempts}]\u001B[0m")
+            val parsed = isValidAmount(input)
+            if (parsed != null) return parsed
+            println("\u001B[31mInvalid amount. Must be a number > 0. [Attempts left: ${2 - attempts}]\u001B[0m")
             attempts++
         }
     }
     return null
 }
 
+
 fun getUpdatedType(old: TransactionType): TransactionType? {
     var attempts = 0
     while (attempts < 3) {
-        print("New type (INCOME or EXPENSE) [$old]: ")
+        println("Select new type [${old.name}]:")
+        TransactionType.entries.forEachIndexed { i, type ->
+            println("${i + 1}. $type")
+        }
+        print("Enter the type number or press Enter to keep current: ")
         val input = readln()
         if (input.isBlank()) {
             print("You entered nothing. Keep \"$old\"? (y/n): ")
             if (readln().lowercase() == "y") return old else attempts++
         } else {
-            try {
-                return TransactionType.valueOf(input.uppercase())
-            } catch (e: IllegalArgumentException) {
-                println("\u001B[31mInvalid type. Please enter INCOME or EXPENSE. [Attempts left: ${2 - attempts}]\u001B[0m")
-                attempts++
-            }
+            val parsed = isValidType(input)
+            if (parsed != null) return parsed
+            println("\u001B[31mInvalid selection. [Attempts left: ${2 - attempts}]\u001B[0m")
+            attempts++
         }
     }
     return null
+}
+
+fun getUpdatedCategory(old: String): String {
+    while (true) {
+        print("New category [$old]: ")
+        val input = readln()
+        if (input.isBlank()) {
+            print("You entered nothing. Keep \"$old\"? (y/n): ")
+            if (readln().lowercase() == "y") return old
+        } else {
+            val parsed = isValidCategory(input)
+            if (parsed != null) return parsed
+            println("\u001B[31mInvalid category. It must not be empty or numeric only.\u001B[0m")
+        }
+    }
 }
 
 fun updateTransaction(old: Transaction): Transaction? {
