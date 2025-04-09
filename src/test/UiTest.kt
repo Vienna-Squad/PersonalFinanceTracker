@@ -76,9 +76,6 @@ fun main() {
         correctResult = null
     )
     //endregion
-
-
-fun main() {
     //region Valid input
     // Test 1: Valid input (non-negative integer)
     check(
@@ -129,10 +126,4 @@ fun main() {
         Validator.isValidId("abc")
     )
     //endregion
-
-
-
-
-
-
 }
