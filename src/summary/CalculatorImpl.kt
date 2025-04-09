@@ -5,7 +5,22 @@ import models.Transaction
 import models.TransactionType
 import java.time.LocalDate
 
-class CalculatorImpl(val transactionsList: List<Transaction>) : Calculator {
+
+class CalculatorImpl(val transaction:List<Transaction>):Calculator{
+    override fun calculateIncomesReport(): Report {
+        val title = "Total of incomes"
+        val incomes = transaction.filter { it.type == TransactionType.INCOME }
+        val totalIncome = incomes.sumOf { it.amount }
+        return Report(incomes, totalIncome,title)
+    }
+
+    override fun calculateExpensesReport(): Report {
+        val title  = "Total of expenses"
+        val expenses = transaction.filter { it.type == TransactionType.EXPENSE }
+        val totalExpense = expenses.sumOf { it.amount }
+        return Report(expenses, totalExpense,title)
+    }
+
     override fun calculateSummaryOfMonth(month: Int): Report {
         var monthTotalSum = 00.0
         for (transaction in transactionsList) {
@@ -21,13 +36,4 @@ class CalculatorImpl(val transactionsList: List<Transaction>) : Calculator {
         )
         return monthlySummary
     }
-
-    override fun calculateIncomesReport(): Report {
-        TODO("Not yet implemented")
-    }
-
-    override fun calculateExpensesReport(): Report {
-        TODO("Not yet implemented")
-    }
-
 }
