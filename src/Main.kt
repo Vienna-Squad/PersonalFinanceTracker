@@ -3,8 +3,8 @@ import models.TransactionType
 import ui.MenuItem
 import ui.Validator.isValidAmount
 import ui.Validator.isValidCategory
-import ui.Validator.isValidType
-import ui.Validator
+import ui.Validator.isValidId
+import ui.Validator.isValidTransactionType
 
 
 fun main() {
@@ -36,21 +36,24 @@ fun showMenuItems(): MenuItem {
 
 fun getTransactionFromUser(): Transaction? {
     print("please enter the transaction type: ")
-    val type: TransactionType = isValidType(readln()) ?: return null
+    var input: String = readln()
+    if (!isValidTransactionType(input)) return null
+    val type = TransactionType.entries[input.toInt() - 1]
     print("please enter the category of transaction: ")
-    val category: String = isValidCategory(readln()) ?: return null
+    input = readln()
+    if (!isValidCategory(input)) return null
+    val category = input
     print("please enter the amount of transaction: ")
-    val amount: Double = isValidAmount(readln()) ?: return null
+    input = readln()
+    if (!isValidAmount(input)) return null
+    val amount = input.toDouble()
     return Transaction(amount = amount, category = category, type = type)
 }
 
 fun getTransactionIdFromUser(): Int? {
     print("Enter transaction index to delete: ")
     val input = readln()
-    val isValid = Validator.isValidId(input)
-    if (!isValid) {
-        return null
-    }
+    if (!isValidId(input)) return null
     return input.toInt()
 }
 
@@ -82,8 +85,8 @@ fun getUpdatedCategory(old: String): String {
             print("You entered nothing. Keep \"$old\"? (y/n): ")
             if (readln().lowercase() == "y") return old
         } else {
-            val parsed = isValidCategory(input)
-            if (parsed != null) return parsed
+            val isValid = isValidCategory(input)
+            if (isValid) return input
             println("\u001B[31mInvalid category. It must not be empty or numeric only.\u001B[0m")
         }
     }
@@ -98,8 +101,8 @@ fun getUpdatedAmount(old: Double): Double? {
             print("You entered nothing. Keep \"$old\"? (y/n): ")
             if (readln().lowercase() == "y") return old else attempts++
         } else {
-            val parsed = isValidAmount(input)
-            if (parsed != null) return parsed
+            val isValid = isValidAmount(input)
+            if (isValid) return input.toDouble()
             println("\u001B[31mInvalid amount. Must be a number > 0. [Attempts left: ${2 - attempts}]\u001B[0m")
             attempts++
         }
@@ -120,8 +123,8 @@ fun getUpdatedType(old: TransactionType): TransactionType? {
             print("You entered nothing. Keep \"$old\"? (y/n): ")
             if (readln().lowercase() == "y") return old else attempts++
         } else {
-            val parsed = isValidType(input)
-            if (parsed != null) return parsed
+            val isValid = isValidTransactionType(input)
+            if (isValid) return TransactionType.entries[input.toInt() - 1]
             println("\u001B[31mInvalid selection. [Attempts left: ${2 - attempts}]\u001B[0m")
             attempts++
         }

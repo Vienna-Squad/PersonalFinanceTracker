@@ -3,21 +3,21 @@ package ui
 import models.TransactionType
 
 object Validator {
-    fun isValidType(input: String): TransactionType? {
+    fun isValidTransactionType(input: String): Boolean {
         val index = input.toIntOrNull() ?: -1
-        return TransactionType.entries.getOrNull(index - 1)
+        return TransactionType.entries.getOrNull(index - 1) != null
     }
 
-    fun isValidCategory(input: String): String? {
-        if (input.isEmpty() || input.isBlank()) return null
-        if (input.all { it.isDigit() }) return null
-        return input
+    fun isValidCategory(input: String): Boolean {
+        if (input.isEmpty() || input.isBlank()) return false
+        if (input.all { it.isDigit() }) return false
+        return true
     }
 
-    fun isValidAmount(input: String): Double? {
-        val value = input.toDoubleOrNull() ?: return null
-        if (value < 0) return value * -1
-        return value
+    fun isValidAmount(input: String): Boolean {
+        val value = input.toDoubleOrNull() ?: return false
+        if (value < 0) return false
+        return true
     }
 
     fun isValidId(id: String): Boolean {
@@ -25,9 +25,6 @@ object Validator {
             return false
         }
         val indexInt = id.toIntOrNull() ?: return false
-        if (indexInt < 0) {
-            return false
-        }
-        return true
+        return indexInt >= 0
     }
 }
