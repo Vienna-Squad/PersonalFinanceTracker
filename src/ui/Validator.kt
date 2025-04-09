@@ -14,7 +14,6 @@ object Validator {
     fun isAmountType(type: TransactionType): Boolean {
         return false
     }
-
     fun isValidId(id: String): Int? {
         if (id.isBlank()) {
             return null
