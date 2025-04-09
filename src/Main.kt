@@ -1,8 +1,8 @@
 import models.Transaction
 import models.TransactionType
 import ui.MenuItem
-import ui.Validator.isAmount
-import ui.Validator.isCategoryType
+import ui.Validator.isValidAmount
+import ui.Validator.isValidCategory
 import ui.Validator.isValidType
 
 fun main() {
@@ -45,9 +45,9 @@ fun getTransactionFromUser(): Transaction? {
     print("please enter the transaction type: ")
     val type: TransactionType = isValidType(readln()) ?: return null
     print("please enter the category of transaction: ")
-    val category: String = isCategoryType(readln()) ?: return null
+    val category: String = isValidCategory(readln()) ?: return null
     print("please enter the amount of transaction: ")
-    val amount: Double = isAmount(readln()) ?: return null
+    val amount: Double = isValidAmount(readln()) ?: return null
     return Transaction(amount = amount, category = category, type = type)
 }
 
