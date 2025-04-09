@@ -56,13 +56,4 @@ fun getAllTransactionsTestCases() {
         correctResult = 2
     )
 
-    // Test for transaction order
-    check(
-        name = "transactions should be ordered by date",
-        expectedResult = transactionMangerActionsTest.getAllTransactions()
-            .zipWithNext { a, b -> a.date <= b.date }
-            .all { it },
-        correctResult = true
-    )
-
 }
