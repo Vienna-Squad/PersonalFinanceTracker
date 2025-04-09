@@ -24,6 +24,6 @@ class TransactionMangerImpl : TransactionManger {
     override fun getAllTransactions(): List<Transaction>? = transactions
 
     override fun getTransactionById(id: Int): Transaction? {
-        return transactions.first { it.id == id }
+        return transactions.firstOrNull{ it.id == id }
     }
 }
