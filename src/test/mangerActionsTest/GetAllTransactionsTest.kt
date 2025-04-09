@@ -25,7 +25,7 @@ fun getAllTransactionsTestCases() {
     transactionMangerActionsTest.addTransaction(
         Transaction(
             date = LocalDate.now(),
-            amount = -50.0,
+            amount = 50.0,
             category = "Food",
             type = TransactionType.EXPENSE
         )
@@ -43,7 +43,7 @@ fun getAllTransactionsTestCases() {
             ),
             Transaction(
                 date = LocalDate.now(),
-                amount = -50.0,
+                amount = 50.0,
                 category = "Food",
                 type = TransactionType.EXPENSE
             )
