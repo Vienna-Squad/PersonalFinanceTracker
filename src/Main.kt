@@ -46,8 +46,12 @@ fun getTransactionFromUser(): Transaction? {
 
 fun getTransactionIdFromUser(): Int? {
     print("Enter transaction index to delete: ")
-    val index = Validator.isValidId(readln())
-    return index
+    val input = readln()
+    val isValid = Validator.isValidId(input)
+    if (!isValid) {
+        return null
+    }
+    return input.toInt()
 }
 
 fun updateTransaction(old: Transaction): Transaction? {
