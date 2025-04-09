@@ -1,6 +1,6 @@
 package ui
 
-import manager.ManagerActions
+import manager.TransactionManger
 import models.Transaction
 import models.TransactionType
 import toMenuItem
@@ -9,7 +9,7 @@ import ui.Validator.isValidCategory
 import ui.Validator.isValidId
 import ui.Validator.isValidTransactionType
 
-class App(private val transactionManager: ManagerActions) {
+class App(private val transactionManager: TransactionManger) {
     fun start() {
         do {
             MenuItem.entries.forEachIndexed { index, action ->
@@ -22,31 +22,43 @@ class App(private val transactionManager: ManagerActions) {
                 MenuItem.ADD -> {
                     val transaction = getTransactionFromUser()
                     if (transaction == null) {
-                        println("\u001B[32minvalid input!!\u001B[0m")
+                        println("\u001B[31minvalid input!!\u001B[0m")
                     } else {
-                        //add
+                        transactionManager.addTransaction(transaction)
+                        println("added: $transaction\n")
                     }
                 }
 
                 MenuItem.UPDATE -> {
-                    val transaction = updateTransaction(transactionManager.getAllTransactions()[0])
-                    if (transaction == null) {
+                    /*//val transaction = updateTransaction()
+                    *//*if (transaction == null) {
                         println("\u001B[32minvalid input!!\u001B[0m")
                     } else {
                         //add
-                    }
+                    }*/
                 }
 
                 MenuItem.DELETE -> {
                     val transactionId = getTransactionIdFromUser()
                     if (transactionId == null) {
-                        println("\u001B[32minvalid input!!\u001B[0m")
+                        println("\u001B[32minvalid input!!\u001B[32m")
                     } else {
-                        //delete
+                        val isDeleted = transactionManager.deleteTransaction(transactionId)
+                        if (isDeleted) {
+                            println("transaction #$transactionId deleted!!\n")
+                        } else {
+                            println("\u001B[32mtransaction not found!!\u001B[32m")
+                        }
                     }
                 }
 
-                MenuItem.VIEW -> {}
+                MenuItem.VIEW -> {
+                    transactionManager.getAllTransactions()?.forEach {
+                        println(it)
+                    }
+                    println()
+                }
+
                 MenuItem.SUMMARY -> {}
                 MenuItem.INCOMES -> {}
                 MenuItem.EXPENSES -> {}
@@ -56,7 +68,10 @@ class App(private val transactionManager: ManagerActions) {
     }
 
     private fun getTransactionFromUser(): Transaction? {
-        print("please enter the transaction type: ")
+        TransactionType.entries.forEachIndexed { index, transactionType ->
+            print("${index + 1}- $transactionType\t")
+        }
+        print("\nplease enter the transaction type: ")
         var input: String = readln()
         if (!isValidTransactionType(input)) return null
         val type = TransactionType.entries[input.toInt() - 1]
