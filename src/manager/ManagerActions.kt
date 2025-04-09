@@ -3,8 +3,8 @@ package manager
 import models.Transaction
 
 interface ManagerActions {
-    fun addTransaction(transaction: Transaction)
-    fun deleteTransaction(id: Int)
-    fun updateTransaction(transaction: Transaction)
+    fun addTransaction(transaction: Transaction): Boolean
+    fun deleteTransaction(id: Int):Boolean
+    fun updateTransaction(transaction: Transaction): Boolean
     fun getAllTransactions(): List<Transaction>
 }
