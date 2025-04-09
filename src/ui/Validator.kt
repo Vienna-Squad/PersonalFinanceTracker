@@ -9,7 +9,9 @@ object Validator {
     }
 
     fun isValidCategory(input: String): String? {
-        return null
+        if (input.isEmpty() || input.isBlank()) return null
+        if (input.all { it.isDigit() }) return null
+        return input
     }
 
     fun isValidAmount(input: String): Double? {
