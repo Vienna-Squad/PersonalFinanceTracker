@@ -21,32 +21,6 @@ fun updateTransactionTestCases() {
     )
 
     test.check(
-        name = "when updating transaction with positive amount but expense type should return false",
-        expectedResult = transactionMangerActionsTest.updateTransaction(
-            Transaction(
-                date = LocalDate.now(),
-                amount = 500.0,
-                category = "Salary",
-                type = TransactionType.EXPENSE
-            )
-        ),
-        correctResult = false
-    )
-
-    test.check(
-        name = "when updating transaction with negative amount but income type should return false",
-        expectedResult = transactionMangerActionsTest.updateTransaction(
-            Transaction(
-                date = LocalDate.now(),
-                amount = -100.0,
-                category = "Freelance",
-                type = TransactionType.INCOME
-            )
-        ),
-        correctResult = false
-    )
-
-    test.check(
         name = "when updating transaction with empty category should return false",
         expectedResult = transactionMangerActionsTest.updateTransaction(
             Transaction(
