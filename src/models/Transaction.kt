@@ -3,6 +3,7 @@ package models
 import java.time.LocalDate
 
 data class Transaction(
+    val id:Int,
     val date: LocalDate = LocalDate.now(),
     val amount: Double,
     val category: String,
