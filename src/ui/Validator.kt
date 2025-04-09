@@ -14,6 +14,4 @@ object Validator {
     fun isAmountType(type: TransactionType): Boolean {
         return false
     }
-
-
 }
