@@ -15,5 +15,7 @@ object Validator {
         return false
     }
 
-
+    fun isValidId(id: String): Int? {
+        return null
+    }
 }
