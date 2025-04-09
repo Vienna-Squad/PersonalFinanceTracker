@@ -14,10 +14,10 @@ fun main() {
 fun test() {
 
     val dumyData = listOf<Transaction>(
-        Transaction(LocalDate.of(2024, 4, 1), 1000.0, "Salary", TransactionType.INCOME),
-        Transaction(LocalDate.of(2024, 4, 2), 200.0, "Gift", TransactionType.INCOME),
-        Transaction(LocalDate.of(2024, 4, 3), 500.0, "Rent", TransactionType.EXPENSE),
-        Transaction(LocalDate.of(2024, 4, 4), 100.0, "Food", TransactionType.EXPENSE)
+        Transaction(1,LocalDate.of(2024, 4, 1), 1000.0, "Salary", TransactionType.INCOME),
+        Transaction(1,LocalDate.of(2024, 4, 2), 200.0, "Gift", TransactionType.INCOME),
+        Transaction(1,LocalDate.of(2024, 4, 3), 500.0, "Rent", TransactionType.EXPENSE),
+        Transaction(1,LocalDate.of(2024, 4, 4), 100.0, "Food", TransactionType.EXPENSE)
     )
 
     val calculatorReport = CalculatorImpl(dumyData)
