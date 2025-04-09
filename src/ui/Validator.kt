@@ -20,4 +20,14 @@ object Validator {
         return value
     }
 
+    fun isValidId(id: String): Int? {
+        if (id.isBlank()) {
+            return null
+        }
+        val indexInt = id.toIntOrNull() ?: return null
+        if (indexInt < 0) {
+            return null
+        }
+        return indexInt
+    }
 }
