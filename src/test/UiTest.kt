@@ -64,7 +64,7 @@ fun main() {
     check(
         name = "when enter a negative number return its positive value",
         expectedResult = Validator.isValidAmount("-1500"),
-        correctResult = 1500
+        correctResult = 1500.0
     )
     check(
         name = "when enter a character return null",

@@ -15,7 +15,9 @@ object Validator {
     }
 
     fun isValidAmount(input: String): Double? {
-        return null
+        val value = input.toDoubleOrNull() ?: return null
+        if (value < 0) return value * -1
+        return value
     }
 
 }
