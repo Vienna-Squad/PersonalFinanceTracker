@@ -12,6 +12,7 @@ fun deleteTransactionTestCases() {
     val transactionMangerActionsTest = TransactionMangerActionsTest()
 
     val validTransaction = Transaction(
+        id = 1,
         date = LocalDate.now(),
         amount = 12000.0,
         category = "Salary",

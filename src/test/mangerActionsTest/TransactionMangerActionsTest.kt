@@ -1,9 +1,9 @@
 package test.mangerActionsTest
 
-import manager.ManagerActions
+import manager.TransactionManger
 import models.Transaction
 
-class TransactionMangerActionsTest(): ManagerActions{
+class TransactionMangerActionsTest(): TransactionManger{
     override fun addTransaction(transaction: Transaction): Boolean {
         return false
     }

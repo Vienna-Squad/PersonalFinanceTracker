@@ -11,18 +11,18 @@ fun getTransactionTestCases() {
     val transactionMangerActionsTest = TransactionMangerActionsTest()
 
     val validTransaction = Transaction(
-        // in case id is 3
+        id = 1,
         date = LocalDate.now(),
         amount = 12000.0,
         category = "Food",
         type = TransactionType.INCOME
     )
 
-    val transactionId = 3
+    val inputTransactionId = 1
 
     check<Transaction>(
         name = "when a valid transaction id is true should return transaction",
-        expectedResult = transactionMangerActionsTest.getTransactionById(transactionId)!!,
+        expectedResult = transactionMangerActionsTest.getTransactionById(inputTransactionId)!!,
         correctResult = validTransaction
     )
 }

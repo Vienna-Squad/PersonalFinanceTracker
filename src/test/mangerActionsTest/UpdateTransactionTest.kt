@@ -11,6 +11,7 @@ fun updateTransactionTestCases() {
         name = "when updating transaction with zero amount should return false",
         expectedResult = transactionMangerActionsTest.updateTransaction(
             Transaction(
+                id = 1,
                 date = LocalDate.now(),
                 amount = 0.0,
                 category = "Food",
@@ -24,6 +25,7 @@ fun updateTransactionTestCases() {
         name = "when updating transaction with empty category should return false",
         expectedResult = transactionMangerActionsTest.updateTransaction(
             Transaction(
+                id = 1,
                 date = LocalDate.now(),
                 amount = 150.0,
                 category = "",
@@ -37,6 +39,7 @@ fun updateTransactionTestCases() {
         name = "when updating transaction with invalid amount format should return false",
         expectedResult = transactionMangerActionsTest.updateTransaction(
             Transaction(
+                id = 1,
                 date = LocalDate.now(),
                 amount = "@#100.0".toDouble(),
                 category = "Shopping",
@@ -50,6 +53,7 @@ fun updateTransactionTestCases() {
         name = "when updating transaction with valid data should return true",
         expectedResult = transactionMangerActionsTest.updateTransaction(
             Transaction(
+                id = 1,
                 date = LocalDate.now(),
                 amount = 200.0,
                 category = "Groceries",
@@ -64,6 +68,7 @@ fun updateTransactionTestCases() {
         name = "when amount is negative should return false",
         expectedResult = transactionMangerActionsTest.updateTransaction(
             Transaction(
+                id = 1,
                 date = LocalDate.now(),
                 amount = -50.0,
                 category = "Valid",
@@ -78,6 +83,7 @@ fun updateTransactionTestCases() {
         name = "when category is blank should return false",
         expectedResult = transactionMangerActionsTest.updateTransaction(
             Transaction(
+                id = 1,
                 date = LocalDate.now(),
                 amount = 100.0,
                 category = "   ",
@@ -91,6 +97,7 @@ fun updateTransactionTestCases() {
         name = "when category exceeds maximum length should return false",
         expectedResult = transactionMangerActionsTest.updateTransaction(
             Transaction(
+                id = 1,
                 date = LocalDate.now(),
                 amount = 100.0,
                 category = "A".repeat(51), // Assuming 50 is max length
@@ -105,6 +112,7 @@ fun updateTransactionTestCases() {
         name = "when type is EXPENSE with negative amount should return false",
         expectedResult = transactionMangerActionsTest.updateTransaction(
             Transaction(
+                id = 1,
                 date = LocalDate.now(),
                 amount = -100.0,
                 category = "Valid",
@@ -118,6 +126,7 @@ fun updateTransactionTestCases() {
         name = "when type is INCOME with negative amount should return false",
         expectedResult = transactionMangerActionsTest.updateTransaction(
             Transaction(
+                id = 1,
                 date = LocalDate.now(),
                 amount = -100.0,
                 category = "Valid",
@@ -133,6 +142,7 @@ fun updateTransactionTestCases() {
         name = "when all fields are valid should return true",
         expectedResult = transactionMangerActionsTest.updateTransaction(
             Transaction(
+                id = 1,
                 date = LocalDate.now(),
                 amount = 100.0,
                 category = "Valid Category",

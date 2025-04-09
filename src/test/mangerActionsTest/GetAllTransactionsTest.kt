@@ -15,6 +15,7 @@ fun getAllTransactionsTestCases() {
     // First add some transactions
     transactionMangerActionsTest.addTransaction(
         Transaction(
+            id = 1,
             date = LocalDate.now(),
             amount = 1000.0,
             category = "Salary",
@@ -24,6 +25,7 @@ fun getAllTransactionsTestCases() {
 
     transactionMangerActionsTest.addTransaction(
         Transaction(
+            id = 1,
             date = LocalDate.now(),
             amount = 50.0,
             category = "Food",
@@ -36,12 +38,14 @@ fun getAllTransactionsTestCases() {
         expectedResult = transactionMangerActionsTest.getAllTransactions(),
         correctResult = listOf(
             Transaction(
+                id = 1,
                 date = LocalDate.now(),
                 amount = 1000.0,
                 category = "Salary",
                 type = TransactionType.INCOME
             ),
             Transaction(
+                id = 1,
                 date = LocalDate.now(),
                 amount = 50.0,
                 category = "Food",
