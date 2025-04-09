@@ -1,12 +1,20 @@
 import models.Transaction
 import models.TransactionType
 import ui.MenuItem
+import ui.Validator.isValidAmount
+import ui.Validator.isValidCategory
+import ui.Validator.isValidType
 import ui.Validator
+
 
 fun main() {
     do {
         val selectedAction = showMenuItems()
         when (selectedAction) {
+            MenuItem.ADD -> {
+                getTransactionFromUser()
+            }
+
             MenuItem.ADD -> {}
             MenuItem.UPDATE -> {
                 val transactionToUpdate = Transaction(
@@ -15,6 +23,7 @@ fun main() {
                     category = "Salary",
                     type = TransactionType.INCOME
                 )
+
 
                 val updated = updateTransaction(transactionToUpdate)
                 if (updated != null) {
@@ -42,19 +51,15 @@ fun showMenuItems(): MenuItem {
     return selectedAction.toMenuItem()
 }
 
-fun getUpdatedCategory(old: String): String {
-    while (true) {
-        print("New category [$old]: ")
-        val input = readln()
-        if (input.isBlank()) {
-            print("You entered nothing. Keep \"$old\"? (y/n): ")
-            if (readln().lowercase() == "y") return old
-        } else {
-            return input
-        }
-    }
+fun getTransactionFromUser(): Transaction? {
+    print("please enter the transaction type: ")
+    val type: TransactionType = isValidType(readln()) ?: return null
+    print("please enter the category of transaction: ")
+    val category: String = isValidCategory(readln()) ?: return null
+    print("please enter the amount of transaction: ")
+    val amount: Double = isValidAmount(readln()) ?: return null
+    return Transaction(amount = amount, category = category, type = type)
 }
-
 fun getUpdatedAmount(old: Double): Double? {
     var attempts = 0
     while (attempts < 3) {
