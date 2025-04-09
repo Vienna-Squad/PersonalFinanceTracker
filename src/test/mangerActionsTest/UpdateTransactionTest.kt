@@ -58,4 +58,87 @@ fun updateTransactionTestCases() {
         ),
         correctResult = true
     )
+
+    // Amount Field Tests
+    test.check(
+        name = "when amount is negative should return false",
+        expectedResult = transactionMangerActionsTest.updateTransaction(
+            Transaction(
+                date = LocalDate.now(),
+                amount = -50.0,
+                category = "Valid",
+                type = TransactionType.EXPENSE
+            )
+        ),
+        correctResult = false
+    )
+
+    // Category Field Tests
+    test.check(
+        name = "when category is blank should return false",
+        expectedResult = transactionMangerActionsTest.updateTransaction(
+            Transaction(
+                date = LocalDate.now(),
+                amount = 100.0,
+                category = "   ",
+                type = TransactionType.EXPENSE
+            )
+        ),
+        correctResult = false
+    )
+
+    test.check(
+        name = "when category exceeds maximum length should return false",
+        expectedResult = transactionMangerActionsTest.updateTransaction(
+            Transaction(
+                date = LocalDate.now(),
+                amount = 100.0,
+                category = "A".repeat(51), // Assuming 50 is max length
+                type = TransactionType.EXPENSE
+            )
+        ),
+        correctResult = false
+    )
+
+    // Transaction Type Tests
+    test.check(
+        name = "when type is EXPENSE with negative amount should return false",
+        expectedResult = transactionMangerActionsTest.updateTransaction(
+            Transaction(
+                date = LocalDate.now(),
+                amount = -100.0,
+                category = "Valid",
+                type = TransactionType.EXPENSE
+            )
+        ),
+        correctResult = false
+    )
+
+    test.check(
+        name = "when type is INCOME with negative amount should return false",
+        expectedResult = transactionMangerActionsTest.updateTransaction(
+            Transaction(
+                date = LocalDate.now(),
+                amount = -100.0,
+                category = "Valid",
+                type = TransactionType.INCOME
+            )
+        ),
+        correctResult = false
+    )
+
+
+    // Valid Cases for Each Field
+    test.check(
+        name = "when all fields are valid should return true",
+        expectedResult = transactionMangerActionsTest.updateTransaction(
+            Transaction(
+                date = LocalDate.now(),
+                amount = 100.0,
+                category = "Valid Category",
+                type = TransactionType.EXPENSE
+            )
+        ),
+        correctResult = true
+    )
 }
