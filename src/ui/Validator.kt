@@ -16,6 +16,13 @@ object Validator {
     }
 
     fun isValidId(id: String): Int? {
-        return null
+        if (id.isBlank()) {
+            return null
+        }
+        val indexInt = id.toIntOrNull() ?: return null
+        if (indexInt < 0) {
+            return null
+        }
+        return indexInt
     }
 }
