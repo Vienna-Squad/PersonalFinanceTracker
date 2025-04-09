@@ -1,4 +1,5 @@
 import ui.MenuItem
+import ui.Validator
 
 fun main() {
     do {
@@ -32,6 +33,12 @@ fun showMenuItems(): MenuItem {
     val selectedAction = readln().toIntOrNull() ?: -1
     println()
     return selectedAction.toMenuItem()
+}
+
+fun getTransactionIdFromUser(): Int? {
+    print("Enter transaction Id to delete: ")
+    val index = Validator.isValidId(readln())
+    return index
 }
 
 
