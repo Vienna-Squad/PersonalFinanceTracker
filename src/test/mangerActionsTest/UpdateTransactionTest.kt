@@ -1,12 +1,15 @@
-package test.mangerActionsTest
+
 import models.Transaction
 import models.TransactionType
+import test.mangerActionsTest.TransactionMangerActionsTest
 import java.time.LocalDate
 
 fun updateTransactionTestCases() {
+
+    val transactionMangerActionsTest = TransactionMangerActionsTest()
     test.check(
         name = "when updating transaction with zero amount should return false",
-        expectedResult = mangerActionsTest.updateTransaction(
+        expectedResult = transactionMangerActionsTest.updateTransaction(
             Transaction(
                 date = LocalDate.now(),
                 amount = 0.0,
@@ -19,7 +22,7 @@ fun updateTransactionTestCases() {
 
     test.check(
         name = "when updating transaction with positive amount but expense type should return false",
-        expectedResult = mangerActionsTest.updateTransaction(
+        expectedResult = transactionMangerActionsTest.updateTransaction(
             Transaction(
                 date = LocalDate.now(),
                 amount = 500.0,
@@ -32,7 +35,7 @@ fun updateTransactionTestCases() {
 
     test.check(
         name = "when updating transaction with negative amount but income type should return false",
-        expectedResult = mangerActionsTest.updateTransaction(
+        expectedResult = transactionMangerActionsTest.updateTransaction(
             Transaction(
                 date = LocalDate.now(),
                 amount = -100.0,
@@ -45,7 +48,7 @@ fun updateTransactionTestCases() {
 
     test.check(
         name = "when updating transaction with empty category should return false",
-        expectedResult = mangerActionsTest.updateTransaction(
+        expectedResult = transactionMangerActionsTest.updateTransaction(
             Transaction(
                 date = LocalDate.now(),
                 amount = 150.0,
@@ -58,7 +61,7 @@ fun updateTransactionTestCases() {
 
     test.check(
         name = "when updating transaction with invalid amount format should return false",
-        expectedResult = mangerActionsTest.updateTransaction(
+        expectedResult = transactionMangerActionsTest.updateTransaction(
             Transaction(
                 date = LocalDate.now(),
                 amount = "@#100.0".toDouble(),
@@ -71,7 +74,7 @@ fun updateTransactionTestCases() {
 
     test.check(
         name = "when updating transaction with valid data should return true",
-        expectedResult = mangerActionsTest.updateTransaction(
+        expectedResult = transactionMangerActionsTest.updateTransaction(
             Transaction(
                 date = LocalDate.now(),
                 amount = 200.0,
