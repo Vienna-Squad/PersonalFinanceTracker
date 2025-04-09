@@ -3,7 +3,7 @@ package test.mangerActionsTest
 import manager.ManagerActions
 import models.Transaction
 
-class MangerActionsTest(): ManagerActions{
+class TransactionMangerActionsTest(): ManagerActions{
     override fun addTransaction(transaction: Transaction): Boolean {
         return false
     }

@@ -8,7 +8,7 @@ import java.time.LocalDate
 
 fun getTransactionTestCases() {
 
-    val mangerActionsTest = MangerActionsTest()
+    val transactionMangerActionsTest = TransactionMangerActionsTest()
 
     val validTransaction = Transaction(
         // in case id is 3
@@ -22,7 +22,7 @@ fun getTransactionTestCases() {
 
     check<Transaction>(
         name = "when a valid transaction id is true should return transaction",
-        expectedResult = mangerActionsTest.getTransactionById(transactionId)!!,
+        expectedResult = transactionMangerActionsTest.getTransactionById(transactionId)!!,
         correctResult = validTransaction
     )
 }

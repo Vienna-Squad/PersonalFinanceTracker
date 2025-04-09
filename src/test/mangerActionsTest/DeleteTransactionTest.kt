@@ -9,7 +9,7 @@ import java.time.LocalDate
 
 fun deleteTransactionTestCases() {
 
-    val mangerActionsTest = MangerActionsTest()
+    val transactionMangerActionsTest = TransactionMangerActionsTest()
 
     val validTransaction = Transaction(
         date = LocalDate.now(),
@@ -20,7 +20,7 @@ fun deleteTransactionTestCases() {
 
     check<Boolean>(
         name = "when a transaction is valid should return true",
-        expectedResult = mangerActionsTest.updateTransaction(transaction =validTransaction ),
+        expectedResult = transactionMangerActionsTest.updateTransaction(transaction =validTransaction ),
         correctResult = true
     )
 }

@@ -9,11 +9,11 @@ import java.time.LocalDate
 
 fun addTransactionTestCases() {
 
-    val mangerActionsTest = MangerActionsTest()
+    val transactionMangerActionsTest = TransactionMangerActionsTest()
 
     check<Boolean>(
         name = "when an amount of transaction is zero should return false",
-        expectedResult = mangerActionsTest.addTransaction(
+        expectedResult = transactionMangerActionsTest.addTransaction(
             Transaction(
                 date = LocalDate.now(),
                 amount = 0.0,
@@ -25,7 +25,7 @@ fun addTransactionTestCases() {
     )
     check<Boolean>(
         name = "when an amount of transaction is positive with expense should return false",
-        expectedResult = mangerActionsTest.addTransaction(
+        expectedResult = transactionMangerActionsTest.addTransaction(
             Transaction(
                 date = LocalDate.now(),
                 amount = 20000.0,
@@ -38,7 +38,7 @@ fun addTransactionTestCases() {
 
     check<Boolean>(
         name = "when an amount of transaction is negative with income should return false",
-        expectedResult = mangerActionsTest.addTransaction(
+        expectedResult = transactionMangerActionsTest.addTransaction(
             Transaction(
                 date = LocalDate.now(),
                 amount = -1200.0,
@@ -51,7 +51,7 @@ fun addTransactionTestCases() {
 
     check<Boolean>(
         name = "when the category of transaction is empty should return false",
-        expectedResult = mangerActionsTest.addTransaction(
+        expectedResult = transactionMangerActionsTest.addTransaction(
             Transaction(
                 date = LocalDate.now(),
                 amount = 2344.0,
@@ -64,7 +64,7 @@ fun addTransactionTestCases() {
 
     check<Boolean>(
         name = "when an amount of transaction is not valid format should return false",
-        expectedResult = mangerActionsTest.addTransaction(
+        expectedResult = transactionMangerActionsTest.addTransaction(
             Transaction(
                 date = LocalDate.now(),
                 amount = "#@-12043.0#$".toDouble(),
@@ -77,7 +77,7 @@ fun addTransactionTestCases() {
 
     check<Boolean>(
         name = "when the category of transaction is not valid format should return false",
-        expectedResult = mangerActionsTest.addTransaction(
+        expectedResult = transactionMangerActionsTest.addTransaction(
             Transaction(
                 date = LocalDate.now(),
                 amount = 21.33,
@@ -90,7 +90,7 @@ fun addTransactionTestCases() {
 
     check<Boolean>(
         name = "when add the valid transaction  should return true",
-        expectedResult = mangerActionsTest.addTransaction(
+        expectedResult = transactionMangerActionsTest.addTransaction(
             Transaction(
                 date = LocalDate.now(),
                 amount = 13300.0,

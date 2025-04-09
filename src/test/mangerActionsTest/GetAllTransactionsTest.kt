@@ -5,15 +5,15 @@ import test.check
 import java.time.LocalDate
 
 fun getAllTransactionsTestCases() {
-    val mangerActionsTest = MangerActionsTest()
+    val transactionMangerActionsTest = TransactionMangerActionsTest()
     check(
         name = "when there are no transactions should return empty list",
-        expectedResult = mangerActionsTest.getAllTransactions(),
+        expectedResult = transactionMangerActionsTest.getAllTransactions(),
         correctResult = emptyList()
     )
 
     // First add some transactions
-    mangerActionsTest.addTransaction(
+    transactionMangerActionsTest.addTransaction(
         Transaction(
             date = LocalDate.now(),
             amount = 1000.0,
@@ -22,7 +22,7 @@ fun getAllTransactionsTestCases() {
         )
     )
 
-    mangerActionsTest.addTransaction(
+    transactionMangerActionsTest.addTransaction(
         Transaction(
             date = LocalDate.now(),
             amount = -50.0,
@@ -33,7 +33,7 @@ fun getAllTransactionsTestCases() {
 
     check(
         name = "when there are transactions should return non-empty list",
-        expectedResult = mangerActionsTest.getAllTransactions(),
+        expectedResult = transactionMangerActionsTest.getAllTransactions(),
         correctResult = listOf(
             Transaction(
                 date = LocalDate.now(),
@@ -52,14 +52,14 @@ fun getAllTransactionsTestCases() {
 
     check(
         name = "should return correct number of transactions",
-        expectedResult = mangerActionsTest.getAllTransactions().size,
+        expectedResult = transactionMangerActionsTest.getAllTransactions().size,
         correctResult = 2
     )
 
     // Test for transaction order
     check(
         name = "transactions should be ordered by date",
-        expectedResult = mangerActionsTest.getAllTransactions()
+        expectedResult = transactionMangerActionsTest.getAllTransactions()
             .zipWithNext { a, b -> a.date <= b.date }
             .all { it },
         correctResult = true
