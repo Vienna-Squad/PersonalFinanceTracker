@@ -11,25 +11,8 @@ fun main() {
     do {
         val selectedAction = showMenuItems()
         when (selectedAction) {
-            MenuItem.ADD -> {
-                getTransactionFromUser()
-            }
-
             MenuItem.ADD -> {}
-            MenuItem.UPDATE -> {
-                val transactionToUpdate = Transaction(
-                    //id = 1,
-                    amount = 100.0,
-                    category = "Salary",
-                    type = TransactionType.INCOME
-                )
-
-
-                val updated = updateTransaction(transactionToUpdate)
-                if (updated != null) {
-                    println("Updated Transaction: $updated")
-                }
-            }
+            MenuItem.UPDATE -> {}
             MenuItem.DELETE -> {}
             MenuItem.VIEW -> {}
             MenuItem.SUMMARY -> {}
@@ -60,6 +43,48 @@ fun getTransactionFromUser(): Transaction? {
     val amount: Double = isValidAmount(readln()) ?: return null
     return Transaction(amount = amount, category = category, type = type)
 }
+
+fun getTransactionIdFromUser(): Int? {
+    print("Enter transaction index to delete: ")
+    val index = Validator.isValidId(readln())
+    return index
+}
+
+fun updateTransaction(old: Transaction): Transaction? {
+    println("Press Enter to keep the current value.")
+
+    val category = getUpdatedCategory(old.category)
+    val amount = getUpdatedAmount(old.amount)
+    if (amount == null) {
+        println("\u001B[31mFailed to update: Invalid amount after 3 attempts.\u001B[0m")
+        return null
+    }
+
+    val type = getUpdatedType(old.type)
+    if (type == null) {
+        println("\u001B[31mFailed to update: Invalid type after 3 attempts.\u001B[0m")
+        return null
+    }
+
+    println("\u001B[32mTransaction updated successfully.\u001B[0m")
+    return old.copy(category = category, amount = amount, type = type)
+}
+
+fun getUpdatedCategory(old: String): String {
+    while (true) {
+        print("New category [$old]: ")
+        val input = readln()
+        if (input.isBlank()) {
+            print("You entered nothing. Keep \"$old\"? (y/n): ")
+            if (readln().lowercase() == "y") return old
+        } else {
+            val parsed = isValidCategory(input)
+            if (parsed != null) return parsed
+            println("\u001B[31mInvalid category. It must not be empty or numeric only.\u001B[0m")
+        }
+    }
+}
+
 fun getUpdatedAmount(old: Double): Double? {
     var attempts = 0
     while (attempts < 3) {
@@ -77,7 +102,6 @@ fun getUpdatedAmount(old: Double): Double? {
     }
     return null
 }
-
 
 fun getUpdatedType(old: TransactionType): TransactionType? {
     var attempts = 0
@@ -101,37 +125,4 @@ fun getUpdatedType(old: TransactionType): TransactionType? {
     return null
 }
 
-fun getUpdatedCategory(old: String): String {
-    while (true) {
-        print("New category [$old]: ")
-        val input = readln()
-        if (input.isBlank()) {
-            print("You entered nothing. Keep \"$old\"? (y/n): ")
-            if (readln().lowercase() == "y") return old
-        } else {
-            val parsed = isValidCategory(input)
-            if (parsed != null) return parsed
-            println("\u001B[31mInvalid category. It must not be empty or numeric only.\u001B[0m")
-        }
-    }
-}
 
-fun updateTransaction(old: Transaction): Transaction? {
-    println("Press Enter to keep the current value.")
-
-    val category = getUpdatedCategory(old.category)
-    val amount = getUpdatedAmount(old.amount)
-    if (amount == null) {
-        println("\u001B[31mFailed to update: Invalid amount after 3 attempts.\u001B[0m")
-        return null
-    }
-
-    val type = getUpdatedType(old.type)
-    if (type == null) {
-        println("\u001B[31mFailed to update: Invalid type after 3 attempts.\u001B[0m")
-        return null
-    }
-
-    println("\u001B[32mTransaction updated successfully.\u001B[0m")
-    return old.copy(category = category, amount = amount, type = type)
-}
