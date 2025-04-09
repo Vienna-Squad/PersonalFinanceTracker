@@ -3,17 +3,15 @@ package ui
 import models.TransactionType
 
 object Validator {
-    fun isValidType(type: TransactionType): Boolean {
-        return false
+    fun isValidType(input: String): TransactionType? {
+        return null
     }
 
-    fun isCategoryType(type: TransactionType): Boolean {
-        return false
+    fun isCategoryType(input: String): String? {
+        return null
     }
 
-    fun isAmountType(type: TransactionType): Boolean {
-        return false
+    fun isAmount(input: String): Double? {
+        return null
     }
-
-
 }
