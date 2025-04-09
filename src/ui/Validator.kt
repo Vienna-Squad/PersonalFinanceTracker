@@ -4,7 +4,8 @@ import models.TransactionType
 
 object Validator {
     fun isValidType(input: String): TransactionType? {
-        return null
+        val index = input.toIntOrNull() ?: -1
+        return TransactionType.entries.getOrNull(index - 1)
     }
 
     fun isCategoryType(input: String): String? {
@@ -14,4 +15,5 @@ object Validator {
     fun isAmount(input: String): Double? {
         return null
     }
+
 }
