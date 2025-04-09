@@ -54,5 +54,28 @@ fun main() {
         correctResult = null
     )
     //endregion
+    println("====================================================================")
+    //region isValidAmount
+    check(
+        name = "when enter a decimal positive number return its value",
+        expectedResult = Validator.isValidAmount("1400.5"),
+        correctResult = 1400.5
+    )
+    check(
+        name = "when enter a negative number return its positive value",
+        expectedResult = Validator.isValidAmount("-1500"),
+        correctResult = 1500
+    )
+    check(
+        name = "when enter a character return null",
+        expectedResult = Validator.isValidAmount("a"),
+        correctResult = null
+    )
+    check(
+        name = "when enter an empty string return null",
+        expectedResult = Validator.isValidAmount(""),
+        correctResult = null
+    )
+    //endregion
 
 }
