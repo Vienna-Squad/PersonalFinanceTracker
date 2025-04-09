@@ -5,6 +5,7 @@ import test.check
 import java.time.LocalDate
 
 fun getAllTransactionsTestCases() {
+    val mangerActionsTest = MangerActionsTest()
     check(
         name = "when there are no transactions should return empty list",
         expectedResult = mangerActionsTest.getAllTransactions(),

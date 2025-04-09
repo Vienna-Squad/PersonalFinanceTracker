@@ -6,9 +6,10 @@ import test.check
 import java.time.LocalDate
 
 
-val mangerActionsTest = MangerActionsTest()
 
 fun addTransactionTestCases() {
+
+    val mangerActionsTest = MangerActionsTest()
 
     check<Boolean>(
         name = "when an amount of transaction is zero should return false",
