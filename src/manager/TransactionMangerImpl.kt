@@ -5,9 +5,7 @@ import models.Transaction
 import summary.Calculator
 import java.time.Month
 
-class TransactionMangerImpl(
-    private val calculator: Calculator
-) : TransactionManger {
+class TransactionMangerImpl(val reportManager:ReportManager) : TransactionManger,ReportManager by reportManager {
     private val transactions = mutableListOf<Transaction>()
     override fun addTransaction(transaction: Transaction): Boolean {
         return transactions.add(transaction)
@@ -32,16 +30,16 @@ class TransactionMangerImpl(
         return transactions.firstOrNull { it.id == id }
     }
 
-    override fun getTransactionsIncomeReport(): Report {
-        return calculator.calculateIncomesReport()
+    override fun getIncomeTransactionsReport(): Report {
+        TODO("Not yet implemented")
     }
 
-    override fun getTransactionsExpenseReport(): Report {
-        return calculator.calculateExpensesReport()
+    override fun getExpenseTransactionsReport(): Report {
+        TODO("Not yet implemented")
     }
-
 
     override fun getTransactionReportOfMonth(month: Month): Report {
-        return calculator.calculateSummaryOfMonth(month.value)
+        TODO("Not yet implemented")
     }
+
 }

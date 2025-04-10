@@ -1,5 +1,6 @@
 package ui
 
+import manager.ReportManager
 import manager.TransactionManger
 import models.Transaction
 import models.TransactionType
@@ -8,8 +9,11 @@ import ui.Validator.isValidAmount
 import ui.Validator.isValidCategory
 import ui.Validator.isValidId
 import ui.Validator.isValidTransactionType
+import java.time.Month
 
-class App(private val transactionManager: TransactionManger) {
+class App(
+    private val transactionManager: TransactionManger,
+) {
     fun start() {
         do {
             MenuItem.entries.forEachIndexed { index, action ->
@@ -52,16 +56,20 @@ class App(private val transactionManager: TransactionManger) {
                     }
                 }
 
-                MenuItem.VIEW -> {
-                    transactionManager.getAllTransactions()?.forEach {
-                        println(it)
-                    }
-                    println()
+                MenuItem.VIEW -> {}
+
+                MenuItem.SUMMARY -> {
+                    println(reportManager.getTransactionReportOfMonth(Month.entries[3]))
                 }
 
-                MenuItem.SUMMARY -> {}
-                MenuItem.INCOMES -> {}
-                MenuItem.EXPENSES -> {}
+                MenuItem.INCOMES -> {
+                    println(reportManager.getIncomeTransactionsReport())
+                }
+
+                MenuItem.EXPENSES -> {
+                    println(reportManager.getExpenseTransactionsReport())
+                }
+
                 MenuItem.EXIT -> {}
             }
         } while (selectedAction != MenuItem.EXIT)

@@ -6,22 +6,22 @@ import models.TransactionType
 import java.time.LocalDate
 
 
-class CalculatorImpl(private val transactions:List<Transaction>):Calculator{
-    override fun calculateIncomesReport(): Report {
+class CalculatorImpl : Calculator {
+    override fun calculateIncomesReport(transactions: List<Transaction>): Report {
         val title = "Total of incomes"
         val incomes = transactions.filter { it.type == TransactionType.INCOME }
         val totalIncome = incomes.sumOf { it.amount }
-        return Report(incomes, totalIncome,title)
+        return Report(incomes, totalIncome, title)
     }
 
-    override fun calculateExpensesReport(): Report {
-        val title  = "Total of expenses"
+    override fun calculateExpensesReport(transactions: List<Transaction>): Report {
+        val title = "Total of expenses"
         val expenses = transactions.filter { it.type == TransactionType.EXPENSE }
         val totalExpense = expenses.sumOf { it.amount }
-        return Report(expenses, totalExpense,title)
+        return Report(expenses, totalExpense, title)
     }
 
-    override fun calculateSummaryOfMonth(month: Int): Report {
+    override fun calculateSummaryOfMonth(month: Int, transactions: List<Transaction>): Report {
         var monthTotalSum = 00.0
         for (transaction in transactions) {
             if (transaction.type == TransactionType.INCOME) monthTotalSum += transaction.amount
