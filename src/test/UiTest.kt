@@ -5,27 +5,27 @@ import ui.Validator
 fun main() {
     //region isValidType
     check(
-        name = "when enter a valid and in range number return the right transaction type",
+        name = "when enter a valid and in range number return true",
         expectedResult = Validator.isValidTransactionType("1"),
         correctResult = true
     )
     check(
-        name = "when enter an empty string return null",
+        name = "when enter an empty string return false",
         expectedResult = Validator.isValidTransactionType(""),
         correctResult = false
     )
     check(
-        name = "when enter a negative number return null",
+        name = "when enter a negative number return false",
         expectedResult = Validator.isValidTransactionType("-1"),
         correctResult = false
     )
     check(
-        name = "when enter an out of range number return null",
+        name = "when enter an out of range number return false",
         expectedResult = Validator.isValidTransactionType("9"),
         correctResult = false
     )
     check(
-        name = "when enter a character return null",
+        name = "when enter a character return false",
         expectedResult = Validator.isValidTransactionType("a"),
         correctResult = false
     )
@@ -33,22 +33,22 @@ fun main() {
     println("====================================================================")
     //region isValidCategoryType
     check(
-        name = "when enter an input with just characters return the same string",
+        name = "when enter an input with just characters return true",
         expectedResult = Validator.isValidCategory("home"),
         correctResult = true
     )
     check(
-        name = "when enter an input with characters and numbers return the same string",
+        name = "when enter an input with characters and numbers return true",
         expectedResult = Validator.isValidCategory("2nd wife"),
         correctResult = true
     )
     check(
-        name = "when enter just numbers return null",
+        name = "when enter just numbers return false",
         expectedResult = Validator.isValidCategory("45201"),
         correctResult = false
     )
     check(
-        name = "when enter an empty string return null",
+        name = "when enter an empty string return false",
         expectedResult = Validator.isValidCategory(""),
         correctResult = false
     )
@@ -56,26 +56,52 @@ fun main() {
     println("====================================================================")
     //region isValidAmount
     check(
-        name = "when enter a decimal positive number return its value",
+        name = "when enter a decimal positive number return true",
         expectedResult = Validator.isValidAmount("1400.5"),
         correctResult = true
     )
     check(
-        name = "when enter a negative number return its positive value",
+        name = "when enter a negative number return false",
         expectedResult = Validator.isValidAmount("-1500"),
         correctResult = false
     )
     check(
-        name = "when enter a character return null",
+        name = "when enter a character return false",
         expectedResult = Validator.isValidAmount("a"),
         correctResult = false
     )
     check(
-        name = "when enter an empty string return null",
+        name = "when enter an empty string return false",
         expectedResult = Validator.isValidAmount(""),
         correctResult = false
     )
     //endregion
+    println("====================================================================")
+    //region isValidMonthNumber
+    check(
+        name = "when enter a valid month number return true",
+        expectedResult = Validator.isValidMonthNumber("5"),
+        correctResult = true
+    )
+    check(
+        name = "when enter out of range (1..12) number  return false",
+        expectedResult = Validator.isValidMonthNumber("19"),
+        correctResult = false
+    )
+    check(
+        name = "when enter character return false",
+        expectedResult = Validator.isValidMonthNumber("a"),
+        correctResult = false
+    )
+    check(
+        name = "when enter an empty string return false",
+        expectedResult = Validator.isValidMonthNumber(""),
+        correctResult = false
+    )
+    //endregion
+    println("====================================================================")
+
+
     //region Valid input
     check(
         "Valid id (0)",

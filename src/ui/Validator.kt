@@ -27,4 +27,9 @@ object Validator {
         val indexInt = id.toIntOrNull() ?: return false
         return indexInt >= 0
     }
+
+    fun isValidMonthNumber(input: String): Boolean {
+        val number = input.toIntOrNull() ?: -1
+        return number in 1..12
+    }
 }
