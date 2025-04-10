@@ -1,3 +1,12 @@
+import manager.TransactionMangerImpl
+import ui.App
+
 fun main() {
-    println("Hello Develop! FROM DEVELOP")
+    App(
+        transactionManager = TransactionMangerImpl()
+    ).start()
 }
+
+
+
+
