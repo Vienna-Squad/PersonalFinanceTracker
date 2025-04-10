@@ -1,18 +1,21 @@
 package ui
 
-import manager.TransactionManger
-import models.Report
-import models.Transaction
-import models.TransactionType
-import toMenuItem
-import ui.Validator.isValidAmount
-import ui.Validator.isValidCategory
-import ui.Validator.isValidId
-import ui.Validator.isValidMonthNumber
-import ui.Validator.isValidTransactionType
-import java.time.Month
 
-class App(private val transactionManager: TransactionManger) {
+import domain.TransactionManager
+import model.Report
+import model.Transaction
+import model.TransactionType
+import service.ReportManagerImp
+import utils.MenuItem
+import utils.Validator.isValidAmount
+import utils.Validator.isValidCategory
+import utils.Validator.isValidId
+import utils.Validator.isValidMonthNumber
+import utils.Validator.isValidTransactionType
+import utils.toMenuItem
+
+class App(private val transactionManager: TransactionManager) {
+    private val reportManager = ReportManagerImp(transactionManager)
     fun start() {
         do {
             MenuItem.entries.forEachIndexed { index, action ->
@@ -79,18 +82,18 @@ class App(private val transactionManager: TransactionManger) {
                     if (monthNumber == null) {
                         println("\u001B[32minvalid input!!\u001B[0m")
                     } else {
-                        val report = transactionManager.getTransactionReportOfMonth(Month.entries[monthNumber - 1])
+                        val report = reportManager.getTransactionReportOfMonth(monthNumber)
                         printReport(report)
                     }
                 }
 
                 MenuItem.INCOMES -> {
-                    val report = transactionManager.getTransactionsIncomeReport()
+                    val report = reportManager.getIncomeTransactionsReport()
                     println(report)
                 }
 
                 MenuItem.EXPENSES -> {
-                    val report = transactionManager.getTransactionsExpenseReport()
+                    val report = reportManager.getExpenseTransactionsReport()
                     println(report)
                 }
 
@@ -181,7 +184,7 @@ class App(private val transactionManager: TransactionManger) {
     }
 
     private fun printReport(report: Report) {
-        println("title${report.title} - total: ${report.sum}")
+        println("title: ${report.title} --- total: ${report.sum}")
         report.transactions.forEach {
             println(it)
         }
