@@ -1,8 +1,13 @@
 package manager
 
+import models.Report
 import models.Transaction
+import summary.Calculator
+import java.time.Month
 
-class TransactionMangerImpl : TransactionManger {
+class TransactionMangerImpl(
+    private val calculator: Calculator
+) : TransactionManger {
     private val transactions = mutableListOf<Transaction>()
     override fun addTransaction(transaction: Transaction): Boolean {
         return transactions.add(transaction)
@@ -25,5 +30,18 @@ class TransactionMangerImpl : TransactionManger {
 
     override fun getTransactionById(id: Int): Transaction? {
         return transactions.firstOrNull { it.id == id }
+    }
+
+    override fun getTransactionsIncomeReport(): Report {
+        return calculator.calculateIncomesReport()
+    }
+
+    override fun getTransactionsExpenseReport(): Report {
+        return calculator.calculateExpensesReport()
+    }
+
+
+    override fun getTransactionReportOfMonth(month: Month): Report {
+        return calculator.calculateSummaryOfMonth(month.value)
     }
 }
