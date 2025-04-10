@@ -3,13 +3,20 @@ package ui
 import manager.TransactionManger
 import models.Transaction
 import models.TransactionType
+import report.ReportMangerImpl
+import summary.Calculator
 import toMenuItem
 import ui.Validator.isValidAmount
 import ui.Validator.isValidCategory
 import ui.Validator.isValidId
 import ui.Validator.isValidTransactionType
 
-class App(private val transactionManager: TransactionManger) {
+class App(
+    private val transactionManager: TransactionManger,
+    calculator : Calculator
+) {
+    private val reportManger =  ReportMangerImpl(transactionManager.getAllTransactions(),calculator)
+
     fun start() {
         do {
             MenuItem.entries.forEachIndexed { index, action ->
@@ -60,7 +67,7 @@ class App(private val transactionManager: TransactionManger) {
                 }
 
                 MenuItem.SUMMARY -> {}
-                MenuItem.INCOMES -> {}
+                MenuItem.INCOMES -> { println(reportManger.showIncomesReport().result) }
                 MenuItem.EXPENSES -> {}
                 MenuItem.EXIT -> {}
             }
