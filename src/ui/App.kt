@@ -7,6 +7,7 @@ import toMenuItem
 import ui.Validator.isValidAmount
 import ui.Validator.isValidCategory
 import ui.Validator.isValidId
+import ui.Validator.isValidMonthNumber
 import ui.Validator.isValidTransactionType
 
 class App(private val transactionManager: TransactionManger) {
@@ -71,7 +72,9 @@ class App(private val transactionManager: TransactionManger) {
                     println()
                 }
 
-                MenuItem.SUMMARY -> {}
+                MenuItem.SUMMARY -> {
+
+                }
                 MenuItem.INCOMES -> {}
                 MenuItem.EXPENSES -> {}
                 MenuItem.EXIT -> {}
@@ -99,9 +102,16 @@ class App(private val transactionManager: TransactionManger) {
     }
 
     private fun getTransactionIdFromUser(): Int? {
-        print("Enter transaction index to delete: ")
+        print("Enter transaction index: ")
         val input = readln()
         if (!isValidId(input)) return null
+        return input.toInt()
+    }
+
+    private fun getMonthFromUser(): Int? {
+        print("Enter the month as a number: ")
+        val input = readln()
+        if (!isValidMonthNumber(input)) return null
         return input.toInt()
     }
 
