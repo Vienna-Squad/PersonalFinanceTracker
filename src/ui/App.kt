@@ -1,6 +1,7 @@
 package ui
 
 import manager.TransactionManger
+import models.Report
 import models.Transaction
 import models.TransactionType
 import toMenuItem
@@ -9,6 +10,7 @@ import ui.Validator.isValidCategory
 import ui.Validator.isValidId
 import ui.Validator.isValidMonthNumber
 import ui.Validator.isValidTransactionType
+import java.time.Month
 
 class App(private val transactionManager: TransactionManger) {
     fun start() {
@@ -73,10 +75,25 @@ class App(private val transactionManager: TransactionManger) {
                 }
 
                 MenuItem.SUMMARY -> {
-
+                    val monthNumber = getMonthFromUser()
+                    if (monthNumber == null) {
+                        println("\u001B[32minvalid input!!\u001B[0m")
+                    } else {
+                        val report = transactionManager.getTransactionReportOfMonth(Month.entries[monthNumber - 1])
+                        printReport(report)
+                    }
                 }
-                MenuItem.INCOMES -> {}
-                MenuItem.EXPENSES -> {}
+
+                MenuItem.INCOMES -> {
+                    val report = transactionManager.getTransactionsIncomeReport()
+                    println(report)
+                }
+
+                MenuItem.EXPENSES -> {
+                    val report = transactionManager.getTransactionsExpenseReport()
+                    println(report)
+                }
+
                 MenuItem.EXIT -> {}
             }
         } while (selectedAction != MenuItem.EXIT)
@@ -160,6 +177,13 @@ class App(private val transactionManager: TransactionManger) {
             val isValid = isValidAmount(input)
             if (!isValid) return null
             return input.toDouble()
+        }
+    }
+
+    private fun printReport(report: Report) {
+        println("title${report.title} - total: ${report.sum}")
+        report.transactions.forEach {
+            println(it)
         }
     }
 
