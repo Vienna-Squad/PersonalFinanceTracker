@@ -85,17 +85,17 @@ fun main() {
     )
     check(
         name = "when enter out of range (1..12) number  return false",
-        expectedResult = Validator.isValidCategory("19"),
+        expectedResult = Validator.isValidMonthNumber("19"),
         correctResult = false
     )
     check(
         name = "when enter character return false",
-        expectedResult = Validator.isValidCategory("a"),
+        expectedResult = Validator.isValidMonthNumber("a"),
         correctResult = false
     )
     check(
         name = "when enter an empty string return false",
-        expectedResult = Validator.isValidCategory(""),
+        expectedResult = Validator.isValidMonthNumber(""),
         correctResult = false
     )
     //endregion
