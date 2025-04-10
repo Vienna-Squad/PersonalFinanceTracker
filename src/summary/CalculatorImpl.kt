@@ -1,39 +1,26 @@
 package summary
 
-import models.Report
 import models.Transaction
 import models.TransactionType
-import java.time.LocalDate
 
 
-class CalculatorImpl(private val transactions:List<Transaction>):Calculator{
-    override fun calculateIncomesReport(): Report {
-        val title = "Total of incomes"
+class CalculatorImpl:Calculator{
+    override fun calculateIncomes(transactions: List<Transaction>): Double{
         val incomes = transactions.filter { it.type == TransactionType.INCOME }
-        val totalIncome = incomes.sumOf { it.amount }
-        return Report(incomes, totalIncome,title)
+        return incomes.sumOf { it.amount }
     }
 
-    override fun calculateExpensesReport(): Report {
-        val title  = "Total of expenses"
+    override fun calculateExpenses(transactions: List<Transaction>): Double {
         val expenses = transactions.filter { it.type == TransactionType.EXPENSE }
-        val totalExpense = expenses.sumOf { it.amount }
-        return Report(expenses, totalExpense,title)
+        return expenses.sumOf { it.amount }
     }
 
-    override fun calculateSummaryOfMonth(month: Int): Report {
+    override fun calculateSummaryOfMonth(transactions: List<Transaction>, month: Int): Double {
         var monthTotalSum = 00.0
         for (transaction in transactions) {
             if (transaction.type == TransactionType.INCOME) monthTotalSum += transaction.amount
             else monthTotalSum -= transaction.amount
         }
-        val monthlyFilterList = transactions.filter { it.date.monthValue == month }
-        val monthlySummary = Report(
-            monthlyFilterList,
-            monthTotalSum,
-            "Summary of ${LocalDate.now().month} Transactions "
-
-        )
-        return monthlySummary
+        return monthTotalSum
     }
 }
