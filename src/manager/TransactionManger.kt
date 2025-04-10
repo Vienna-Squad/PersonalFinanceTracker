@@ -1,6 +1,6 @@
 package manager
 
-import models.Report
+import report.Report
 import models.Transaction
 import models.TransactionType
 import java.time.Month
@@ -11,7 +11,9 @@ interface TransactionManger {
     fun updateTransaction(transaction: Transaction): Boolean
     fun getAllTransactions(): List<Transaction>
     fun getTransactionById(id: Int): Transaction?
-    fun getTransactionsIncomeReport(): Report
-    fun getTransactionsExpenseReport(): Report
-    fun getTransactionReportOfMonth(month: Month): Report
+//    fun getTransactionsIncomeReport(): Report
+//    fun getTransactionsExpenseReport(): Report
+//    fun getTransactionReportOfMonth(month: Month): Report
 }
+
+

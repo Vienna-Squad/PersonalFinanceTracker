@@ -1,12 +1,11 @@
 package manager
 
-import models.Report
+import report.Report
 import models.Transaction
 import summary.Calculator
 import java.time.Month
 
 class TransactionMangerImpl(
-    private val calculator: Calculator
 ) : TransactionManger {
     private val transactions = mutableListOf<Transaction>()
     override fun addTransaction(transaction: Transaction): Boolean {
@@ -32,16 +31,4 @@ class TransactionMangerImpl(
         return transactions.firstOrNull { it.id == id }
     }
 
-    override fun getTransactionsIncomeReport(): Report {
-        return calculator.calculateIncomesReport()
-    }
-
-    override fun getTransactionsExpenseReport(): Report {
-        return calculator.calculateExpensesReport()
-    }
-
-
-    override fun getTransactionReportOfMonth(month: Month): Report {
-        return calculator.calculateSummaryOfMonth(month.value)
-    }
 }
