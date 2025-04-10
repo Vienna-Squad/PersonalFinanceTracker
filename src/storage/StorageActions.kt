@@ -1,9 +1,9 @@
 package storage
 
-import models.Transaction
+import mangers.TranasctionManger.TransactionModel
 
 interface StorageActions {
-    fun read(): List<Transaction>
-    fun write(transactions: List<Transaction>)
-    fun append(transaction: Transaction)
+    fun read(): List<TransactionModel>
+    fun write(transactions: List<TransactionModel>)
+    fun append(transactionModel: TransactionModel)
 }

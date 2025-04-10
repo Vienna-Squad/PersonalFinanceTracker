@@ -1,18 +1,24 @@
-package ui
+import mangers.TranasctionManger.TransactionModel
+import mangers.TranasctionManger.TransactionType
+import mangers.report.Report
+import mangers.report.ReportManger
+import mangers.transaction.Transaction
+import mangers.report.ReportModel
+import mangers.transaction.TransactionManger
+import utils.MenuItem
+import utils.Validator
+import utils.Validator.isValidAmount
+import utils.Validator.isValidCategory
+import utils.Validator.isValidId
+import utils.Validator.isValidMonthNumber
+import utils.Validator.isValidTransactionType
+import utils.toMenuItem
 
-import manager.TransactionManger
-import models.Report
-import models.Transaction
-import models.TransactionType
-import toMenuItem
-import ui.Validator.isValidAmount
-import ui.Validator.isValidCategory
-import ui.Validator.isValidId
-import ui.Validator.isValidMonthNumber
-import ui.Validator.isValidTransactionType
-import java.time.Month
+class App() {
 
-class App(private val transactionManager: TransactionManger) {
+    private val transactionManager: Transaction = TransactionManger()
+    private val reportManger: Report = ReportManger(transactionManager)
+
     fun start() {
         do {
             MenuItem.entries.forEachIndexed { index, action ->
@@ -25,7 +31,7 @@ class App(private val transactionManager: TransactionManger) {
                 MenuItem.ADD -> {
                     val transaction = getTransactionFromUser()
                     if (transaction == null) {
-                        println("\u001B[31minvalid input!!\u001B[0m")
+                        println("\u001B[31minvalid input!!\u001B[0m\n")
                     } else {
                         transactionManager.addTransaction(transaction)
                         println("transaction #${transaction.id} added!!\n")
@@ -36,19 +42,19 @@ class App(private val transactionManager: TransactionManger) {
                 MenuItem.UPDATE -> {
                     val transactionId = getTransactionIdFromUser()
                     if (transactionId == null) {
-                        println("\u001B[32minvalid input!!\u001B[0m")
+                        println("\u001B[31minvalid input!!\u001B[0m\n")
                         return
                     }
                     val oldTransaction = transactionManager.getTransactionById(id = transactionId)
                     if (oldTransaction == null) {
-                        println("\u001B[32mtransaction not found!!\u001B[0m")
+                        println("\u001B[31mtransaction not found!!\u001B[0m\n")
                     } else {
                         val newTransaction = getUpdatedTransactionFromUser(oldTransaction)
                         if (newTransaction != null) {
                             transactionManager.updateTransaction(newTransaction)
                             println("transaction #$transactionId updated!!\n")
                         } else {
-                            println("\u001B[32minvalid input!!\u001B[0m")
+                            println("\u001B[31minvalid input!!\u001B[0m\n")
                         }
                     }
                 }
@@ -56,13 +62,13 @@ class App(private val transactionManager: TransactionManger) {
                 MenuItem.DELETE -> {
                     val transactionId = getTransactionIdFromUser()
                     if (transactionId == null) {
-                        println("\u001B[32minvalid input!!\u001B[32m")
+                        println("\u001B[31minvalid input!!\u001B[0m\n")
                     } else {
                         val isDeleted = transactionManager.deleteTransaction(transactionId)
                         if (isDeleted) {
-                            println("transaction #$transactionId deleted!!\n")
+                            println("#$transactionId transaction  deleted!!\n")
                         } else {
-                            println("\u001B[32mtransaction not found!!\u001B[32m")
+                            println("\u001B[31mtransaction not found!!\u001B[0m\n")
                         }
                     }
                 }
@@ -77,21 +83,21 @@ class App(private val transactionManager: TransactionManger) {
                 MenuItem.SUMMARY -> {
                     val monthNumber = getMonthFromUser()
                     if (monthNumber == null) {
-                        println("\u001B[32minvalid input!!\u001B[0m")
+                        println("\u001B[31minvalid input!!\u001B[0m\n")
                     } else {
-                        val report = transactionManager.getTransactionReportOfMonth(Month.entries[monthNumber - 1])
+                        val report = reportManger.calculateSummaryOfMonthReport(monthNumber)
                         printReport(report)
                     }
                 }
 
                 MenuItem.INCOMES -> {
-                    val report = transactionManager.getTransactionsIncomeReport()
-                    println(report)
+                    val report = reportManger.calculateIncomesReport()
+                    printReport(report)
                 }
 
                 MenuItem.EXPENSES -> {
-                    val report = transactionManager.getTransactionsExpenseReport()
-                    println(report)
+                    val report = reportManger.calculateExpensesReport()
+                    printReport(report)
                 }
 
                 MenuItem.EXIT -> {}
@@ -99,7 +105,7 @@ class App(private val transactionManager: TransactionManger) {
         } while (selectedAction != MenuItem.EXIT)
     }
 
-    private fun getTransactionFromUser(): Transaction? {
+    private fun getTransactionFromUser(): TransactionModel? {
         TransactionType.entries.forEachIndexed { index, transactionType ->
             print("${index + 1}- $transactionType\t")
         }
@@ -115,7 +121,7 @@ class App(private val transactionManager: TransactionManger) {
         input = readln()
         if (!isValidAmount(input)) return null
         val amount = input.toDouble()
-        return Transaction(amount = amount, category = category, type = type)
+        return TransactionModel(amount = amount, category = category, type = type)
     }
 
     private fun getTransactionIdFromUser(): Int? {
@@ -132,7 +138,7 @@ class App(private val transactionManager: TransactionManger) {
         return input.toInt()
     }
 
-    private fun getUpdatedTransactionFromUser(old: Transaction): Transaction? {
+    private fun getUpdatedTransactionFromUser(old: TransactionModel): TransactionModel? {
         println("Press Enter to keep the current value.")
         val type = getUpdatedType(old.type) ?: return null
         val category = getUpdatedCategory(old.category) ?: return null
@@ -180,11 +186,17 @@ class App(private val transactionManager: TransactionManger) {
         }
     }
 
-    private fun printReport(report: Report) {
-        println("title${report.title} - total: ${report.sum}")
-        report.transactions.forEach {
-            println(it)
+    private fun printReport(report: ReportModel) {
+        if (report.transactions.isNotEmpty()) {
+            println("title: ${report.title} --- total: ${report.result}")
+            report.transactions.forEach {
+                println(it)
+            }
+        } else {
+            println("no transactions at this month!!")
         }
-    }
 
+    }
 }
+
+

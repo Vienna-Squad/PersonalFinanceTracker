@@ -1,8 +1,9 @@
-package models
+package mangers.TranasctionManger
 
+import utils.IdGenerator
 import java.time.LocalDate
 
-data class Transaction(
+data class TransactionModel(
     val id: Int = IdGenerator.getNextInt(),
     val date: LocalDate = LocalDate.now(),
     val amount: Double,
