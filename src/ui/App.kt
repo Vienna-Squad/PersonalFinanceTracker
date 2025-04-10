@@ -25,17 +25,29 @@ class App(private val transactionManager: TransactionManger) {
                         println("\u001B[31minvalid input!!\u001B[0m")
                     } else {
                         transactionManager.addTransaction(transaction)
-                        println("added: $transaction\n")
+                        println("transaction #${transaction.id} added!!\n")
+
                     }
                 }
 
                 MenuItem.UPDATE -> {
-                    /*//val transaction = updateTransaction()
-                    *//*if (transaction == null) {
+                    val transactionId = getTransactionIdFromUser()
+                    if (transactionId == null) {
                         println("\u001B[32minvalid input!!\u001B[0m")
+                        return
+                    }
+                    val oldTransaction = transactionManager.getTransactionById(id = transactionId)
+                    if (oldTransaction == null) {
+                        println("\u001B[32mtransaction not found!!\u001B[0m")
                     } else {
-                        //add
-                    }*/
+                        val newTransaction = getUpdatedTransactionFromUser(oldTransaction)
+                        if (newTransaction != null) {
+                            transactionManager.updateTransaction(newTransaction)
+                            println("transaction #$transactionId updated!!\n")
+                        } else {
+                            println("\u001B[32minvalid input!!\u001B[0m")
+                        }
+                    }
                 }
 
                 MenuItem.DELETE -> {
@@ -53,7 +65,7 @@ class App(private val transactionManager: TransactionManger) {
                 }
 
                 MenuItem.VIEW -> {
-                    transactionManager.getAllTransactions()?.forEach {
+                    transactionManager.getAllTransactions().forEach {
                         println(it)
                     }
                     println()
@@ -93,78 +105,52 @@ class App(private val transactionManager: TransactionManger) {
         return input.toInt()
     }
 
-    private fun updateTransaction(old: Transaction): Transaction? {
+    private fun getUpdatedTransactionFromUser(old: Transaction): Transaction? {
         println("Press Enter to keep the current value.")
-
-        val category = getUpdatedCategory(old.category)
-        val amount = getUpdatedAmount(old.amount)
-        if (amount == null) {
-            println("\u001B[31mFailed to update: Invalid amount after 3 attempts.\u001B[0m")
-            return null
-        }
-
-        val type = getUpdatedType(old.type)
-        if (type == null) {
-            println("\u001B[31mFailed to update: Invalid type after 3 attempts.\u001B[0m")
-            return null
-        }
-
+        val type = getUpdatedType(old.type) ?: return null
+        val category = getUpdatedCategory(old.category) ?: return null
+        val amount = getUpdatedAmount(old.amount) ?: return null
         println("\u001B[32mTransaction updated successfully.\u001B[0m")
         return old.copy(category = category, amount = amount, type = type)
     }
 
-    private fun getUpdatedCategory(old: String): String {
-        while (true) {
-            print("New category [$old]: ")
-            val input = readln()
-            if (input.isBlank()) {
-                print("You entered nothing. Keep \"$old\"? (y/n): ")
-                if (readln().lowercase() == "y") return old
-            } else {
-                val isValid = isValidCategory(input)
-                if (isValid) return input
-                println("\u001B[31mInvalid category. It must not be empty or numeric only.\u001B[0m")
-            }
+    private fun getUpdatedType(old: TransactionType): TransactionType? {
+        TransactionType.entries.forEachIndexed { i, type ->
+            print("${i + 1}-$type\t")
+        }
+        print("\nEnter the type number or press Enter to keep current [${old.name}]: ")
+        val input = readln()
+        if (input.isBlank()) {
+            return old
+        } else {
+            val isValid = isValidTransactionType(input)
+            if (!isValid) return null
+            return TransactionType.entries[input.toInt() - 1]
+        }
+    }
+
+    private fun getUpdatedCategory(old: String): String? {
+        print("Enter the new category or press Enter to keep current [${old}]: ")
+        val input = readln()
+        if (input.isBlank()) {
+            return old
+        } else {
+            val isValid = isValidCategory(input)
+            if (!isValid) return null
+            return input
         }
     }
 
     private fun getUpdatedAmount(old: Double): Double? {
-        var attempts = 0
-        while (attempts < 3) {
-            print("New amount [$old]: ")
-            val input = readln()
-            if (input.isBlank()) {
-                print("You entered nothing. Keep \"$old\"? (y/n): ")
-                if (readln().lowercase() == "y") return old else attempts++
-            } else {
-                val isValid = isValidAmount(input)
-                if (isValid) return input.toDouble()
-                println("\u001B[31mInvalid amount. Must be a number > 0. [Attempts left: ${2 - attempts}]\u001B[0m")
-                attempts++
-            }
+        print("Enter the new amount or press Enter to keep current [${old}]: ")
+        val input = readln()
+        if (input.isBlank()) {
+            return old
+        } else {
+            val isValid = isValidAmount(input)
+            if (!isValid) return null
+            return input.toDouble()
         }
-        return null
     }
 
-    private fun getUpdatedType(old: TransactionType): TransactionType? {
-        var attempts = 0
-        while (attempts < 3) {
-            println("Select new type [${old.name}]:")
-            TransactionType.entries.forEachIndexed { i, type ->
-                println("${i + 1}. $type")
-            }
-            print("Enter the type number or press Enter to keep current: ")
-            val input = readln()
-            if (input.isBlank()) {
-                print("You entered nothing. Keep \"$old\"? (y/n): ")
-                if (readln().lowercase() == "y") return old else attempts++
-            } else {
-                val isValid = isValidTransactionType(input)
-                if (isValid) return TransactionType.entries[input.toInt() - 1]
-                println("\u001B[31mInvalid selection. [Attempts left: ${2 - attempts}]\u001B[0m")
-                attempts++
-            }
-        }
-        return null
-    }
 }

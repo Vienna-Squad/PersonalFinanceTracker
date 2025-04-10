@@ -18,7 +18,7 @@ class TransactionMangerImpl(
     }
 
     override fun updateTransaction(transaction: Transaction): Boolean {
-        val transactionIndex = transactions.indexOf(transaction)
+        val transactionIndex = transactions.indexOfFirst { it.id == transaction.id }
         return if (transactionIndex != -1) {
             transactions[transactionIndex] = transaction
             true
