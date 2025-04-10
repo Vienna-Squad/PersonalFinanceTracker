@@ -4,10 +4,9 @@ import domain.ReportManager
 import domain.TransactionManager
 import model.Report
 import model.TransactionType
-import java.time.LocalDate
+import java.time.Month
 
 class ReportManagerImp(private val transactionManager: TransactionManager) : ReportManager {
-
 
     override fun getIncomeTransactionsReport() = calculateIncomesReport()
 
@@ -31,15 +30,15 @@ class ReportManagerImp(private val transactionManager: TransactionManager) : Rep
 
     private fun calculateSummaryOfMonth(month: Int): Report {
         var monthTotalSum = 00.0
-        for (transaction in transactionManager.getAllTransactions()) {
+        val monthlyFilterList = transactionManager.getAllTransactions().filter { it.date.monthValue == month }
+        for (transaction in monthlyFilterList) {
             if (transaction.type == TransactionType.INCOME) monthTotalSum += transaction.amount
             else monthTotalSum -= transaction.amount
         }
-        val monthlyFilterList = transactionManager.getAllTransactions().filter { it.date.monthValue == month }
         val monthlySummary = Report(
             monthlyFilterList,
             monthTotalSum,
-            "Summary of ${LocalDate.now().month} Transactions "
+            "Summary of ${Month.entries[month - 1]} Transactions "
 
         )
         return monthlySummary
