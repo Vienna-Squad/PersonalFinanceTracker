@@ -1,7 +1,9 @@
 package test.mangerActionsTest
 
 import manager.TransactionManger
+import models.Report
 import models.Transaction
+import java.time.Month
 
 class TransactionMangerActionsTest(): TransactionManger{
     override fun addTransaction(transaction: Transaction): Boolean {
@@ -22,6 +24,18 @@ class TransactionMangerActionsTest(): TransactionManger{
 
     override fun getTransactionById(id: Int): Transaction? {
         return null
+    }
+
+    override fun getTransactionsIncomeReport(): Report {
+        return Report()
+    }
+
+    override fun getTransactionsExpenseReport(): Report {
+        return Report()
+    }
+
+    override fun getTransactionReportOfMonth(month: Month): Report {
+        return Report()
     }
 }
 
