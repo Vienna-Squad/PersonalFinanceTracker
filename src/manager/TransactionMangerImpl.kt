@@ -2,7 +2,6 @@ package manager
 
 import models.Report
 import models.Transaction
-import models.TransactionType
 import summary.Calculator
 import java.time.Month
 
@@ -33,20 +32,14 @@ class TransactionMangerImpl(
         return transactions.firstOrNull { it.id == id }
     }
 
-    override fun getTransactionsByType(transactionType: TransactionType): List<Transaction>? {
-        return transactions.filter { item -> item.type == transactionType }
+    override fun getTransactionsIncomeReport(): Report {
+        return calculator.calculateIncomesReport()
     }
 
-    override fun getTransactionsReportByType(transactionType: TransactionType): Report {
-        return when(transactionType){
-            TransactionType.INCOME -> calculator.calculateIncomesReport()
-            TransactionType.EXPENSE -> calculator.calculateExpensesReport()
-        }
+    override fun getTransactionsExpenseReport(): Report {
+        return calculator.calculateExpensesReport()
     }
 
-    override fun getTransactionsByMonth(month: Month): List<Transaction>?{
-        return transactions.filter { item -> item.date.month == month }
-    }
 
     override fun getTransactionReportOfMonth(month: Month): Report {
         return calculator.calculateSummaryOfMonth(month.value)

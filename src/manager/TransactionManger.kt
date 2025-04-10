@@ -11,8 +11,7 @@ interface TransactionManger {
     fun updateTransaction(transaction: Transaction): Boolean
     fun getAllTransactions(): List<Transaction>
     fun getTransactionById(id: Int): Transaction?
-    fun getTransactionsByType(transactionType: TransactionType): List<Transaction>?
-    fun getTransactionsReportByType(transactionType: TransactionType): Report
-    fun getTransactionsByMonth(month: Month): List<Transaction>?
+    fun getTransactionsIncomeReport(): Report
+    fun getTransactionsExpenseReport(): Report
     fun getTransactionReportOfMonth(month: Month): Report
 }
