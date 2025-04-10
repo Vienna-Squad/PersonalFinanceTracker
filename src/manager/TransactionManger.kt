@@ -9,7 +9,7 @@ interface TransactionManger {
     fun addTransaction(transaction: Transaction): Boolean
     fun deleteTransaction(id: Int):Boolean
     fun updateTransaction(transaction: Transaction): Boolean
-    fun getAllTransactions(): List<Transaction>?
+    fun getAllTransactions(): List<Transaction>
     fun getTransactionById(id: Int): Transaction?
     fun getTransactionsByType(transactionType: TransactionType): List<Transaction>?
     fun getTransactionsReportByType(transactionType: TransactionType): Report
