@@ -1,6 +1,6 @@
 package test
 
-import ui.Validator
+import utils.Validator
 
 fun main() {
     //region isValidType

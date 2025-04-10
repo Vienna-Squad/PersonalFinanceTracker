@@ -1,14 +1,7 @@
-import manager.ReportManager
-import manager.ReportManagerImp
-import manager.TransactionMangerImpl
-import summary.Calculator
-import summary.CalculatorImpl
-import ui.App
+import service.TransactionManagerImpl
 
 fun main() {
-    App(
-        transactionManager = TransactionMangerImpl(reportManager = ReportManagerImp(calculator = CalculatorImpl())),
-    ).start()
+    App(transactionManager = TransactionManagerImpl()).start()
 }
 
 

@@ -1,5 +1,6 @@
-package models
+package model
 
+import utils.IdGenerator
 import java.time.LocalDate
 
 data class Transaction(

@@ -1,4 +1,4 @@
-package ui
+package utils
 
 enum class MenuItem(val title: String) {
     ADD("Add transaction"),

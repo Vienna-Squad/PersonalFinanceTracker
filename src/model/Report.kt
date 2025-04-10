@@ -1,4 +1,4 @@
-package models
+package model
 
 data class Report(
     val transactions: List<Transaction> = emptyList(),

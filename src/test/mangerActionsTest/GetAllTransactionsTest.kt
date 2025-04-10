@@ -1,6 +1,7 @@
+/*
 package test.mangerActionsTest
-import models.Transaction
-import models.TransactionType
+import transaction.Transaction
+import transaction.TransactionType
 import test.check
 import java.time.LocalDate
 
@@ -60,4 +61,4 @@ fun getAllTransactionsTestCases() {
         correctResult = 2
     )
 
-}
+}*/

@@ -1,19 +1,18 @@
-package ui
-
-import manager.ReportManager
-import manager.TransactionManger
-import models.Transaction
-import models.TransactionType
-import toMenuItem
-import ui.Validator.isValidAmount
-import ui.Validator.isValidCategory
-import ui.Validator.isValidId
-import ui.Validator.isValidTransactionType
-import java.time.Month
+import domain.TransactionManager
+import model.Transaction
+import model.TransactionType
+import service.ReportManagerImp
+import utils.MenuItem
+import utils.Validator.isValidAmount
+import utils.Validator.isValidCategory
+import utils.Validator.isValidId
+import utils.Validator.isValidTransactionType
+import utils.toMenuItem
 
 class App(
-    private val transactionManager: TransactionManger,
+    private val transactionManager: TransactionManager,
 ) {
+    private val reportManger = ReportManagerImp(transactionManager)
     fun start() {
         do {
             MenuItem.entries.forEachIndexed { index, action ->
@@ -56,18 +55,21 @@ class App(
                     }
                 }
 
-                MenuItem.VIEW -> {}
+                MenuItem.VIEW -> transactionManager.getAllTransactions().forEach {
+                    println(it)
+                }
+
 
                 MenuItem.SUMMARY -> {
-                    println(reportManager.getTransactionReportOfMonth(Month.entries[3]))
+                    println(reportManger.getTransactionReportOfMonth(4))
                 }
 
                 MenuItem.INCOMES -> {
-                    println(reportManager.getIncomeTransactionsReport())
+                    println(reportManger.getIncomeTransactionsReport())
                 }
 
                 MenuItem.EXPENSES -> {
-                    println(reportManager.getExpenseTransactionsReport())
+                    println(reportManger.getExpenseTransactionsReport())
                 }
 
                 MenuItem.EXIT -> {}

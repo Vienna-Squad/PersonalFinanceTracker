@@ -1,4 +1,4 @@
-package models
+package utils
 
 object IdGenerator {
     private var initialValue = 0

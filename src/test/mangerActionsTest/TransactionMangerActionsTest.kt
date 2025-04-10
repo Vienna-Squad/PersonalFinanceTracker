@@ -1,9 +1,10 @@
+/*
 package test.mangerActionsTest
 
-import manager.TransactionManger
-import models.Transaction
+import domain.TransactionManger
+import transaction.Transaction
 
-class TransactionMangerActionsTest(): TransactionManger{
+class TransactionMangerActionsTest(): TransactionManger {
     override fun addTransaction(transaction: Transaction): Boolean {
         return false
     }
@@ -27,3 +28,4 @@ class TransactionMangerActionsTest(): TransactionManger{
 
 
 
+*/

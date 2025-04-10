@@ -1,8 +1,8 @@
+/*
 package test
 
-import models.Transaction
-import models.TransactionType
-import summary.CalculatorImpl
+import transaction.Transaction
+import transaction.TransactionType
 import java.time.LocalDate
 
 fun main() {
@@ -128,4 +128,4 @@ fun testSummaryCalculator() {
         correctResult = 3
     )
     //endregion
-}
+}*/

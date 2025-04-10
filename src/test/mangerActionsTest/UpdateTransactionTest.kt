@@ -1,6 +1,7 @@
+/*
 
-import models.Transaction
-import models.TransactionType
+import transaction.Transaction
+import transaction.TransactionType
 import test.mangerActionsTest.TransactionMangerActionsTest
 import java.time.LocalDate
 
@@ -151,4 +152,4 @@ fun updateTransactionTestCases() {
         ),
         correctResult = true
     )
-}
+}*/

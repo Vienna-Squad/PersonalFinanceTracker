@@ -1,6 +1,6 @@
-package ui
+package utils
 
-import models.TransactionType
+import model.TransactionType
 
 object Validator {
     fun isValidTransactionType(input: String): Boolean {
