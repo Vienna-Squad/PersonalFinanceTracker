@@ -20,7 +20,6 @@ fun <T> check(
 
 
 class Test() {
-
     fun getUiTest() {
         //region isValidType
         check(
@@ -289,4 +288,26 @@ class Test() {
 
     }
 
+    fun getTransactionTest(){
+        var isNotValidUpdateTransaction = true
+        val transactionModelTest = TransactionModel(
+            id = 1,
+            date = LocalDate.now(),
+            amount = 1200.0,
+            category = "Salary",
+            type = TransactionType.INCOME
+        )
+        val transactionMangerTest = TransactionManger()
+        transactionMangerTest.addTransaction(transactionModelTest)
+
+        if (transactionModelTest !in transactionMangerTest.getAllTransactions())
+            isNotValidUpdateTransaction = false
+
+        check(
+           name =  "when transaction model is in the list of transactions should return false",
+            expectedResult = transactionMangerTest.updateTransaction(transactionModelTest) ,
+            correctResult = isNotValidUpdateTransaction
+        )
+
+    }
 }
