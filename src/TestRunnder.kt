@@ -1,7 +1,11 @@
+import kotlin.system.exitProcess
+
 fun main() {
     if(!Test.run()){
         println("Test failed.")
-        System.exit(1)
+        println("test githuba ctions")
+        exitProcess(1)
+
     }
     println("All tests passed.")
     }
