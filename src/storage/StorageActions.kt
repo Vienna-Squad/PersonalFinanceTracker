@@ -2,8 +2,7 @@ package storage
 
 import mangers.transaction.TransactionModel
 
-interface StorageActions {
+interface Storage {
     fun read(): List<TransactionModel>
     fun write(transactions: List<TransactionModel>)
-    fun append(transactionModel: TransactionModel)
 }
