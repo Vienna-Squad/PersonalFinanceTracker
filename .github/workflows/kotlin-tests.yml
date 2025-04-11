@@ -3,7 +3,7 @@ name: Kotlin Test Runner
 on:
   push:
     branches:
-    - develop
+    - github-actions
 
 jobs:
   test:
