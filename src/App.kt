@@ -84,7 +84,7 @@ class App {
                     if (monthNumber == null) {
                         printRedText("invalid input!!\n")
                     } else {
-                        val report = reportManger.calculateSummaryOfMonthReport(monthNumber)
+                        val report = reportManger.generateSummaryOfMonthReport(monthNumber)
                         printReport(report)
                     }
                 }
@@ -95,7 +95,7 @@ class App {
                 }
 
                 MenuItem.EXPENSES -> {
-                    val report = reportManger.calculateExpensesReport()
+                    val report = reportManger.generateExpensesReport()
                     printReport(report)
                 }
 
