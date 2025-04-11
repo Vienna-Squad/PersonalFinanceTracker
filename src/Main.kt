@@ -1,5 +1,5 @@
 fun main() {
-    App().start()
+    //App().start()
     //Test.run()
 }
 
