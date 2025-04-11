@@ -1,5 +1,5 @@
-import mangers.TranasctionManger.TransactionModel
-import mangers.TranasctionManger.TransactionType
+import mangers.transaction.TransactionModel
+import mangers.transaction.TransactionType
 import mangers.report.ReportManger
 import mangers.transaction.TransactionManger
 import utils.Validator

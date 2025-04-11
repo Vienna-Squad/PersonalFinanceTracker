@@ -1,6 +1,6 @@
 package mangers.report
 
-import mangers.TranasctionManger.TransactionType
+import mangers.transaction.TransactionType
 import mangers.transaction.Transaction
 
 import java.time.LocalDate

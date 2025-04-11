@@ -1,7 +1,5 @@
 package mangers.transaction
 
-import mangers.TranasctionManger.TransactionModel
-
 
 interface Transaction {
     fun addTransaction(transactionModel: TransactionModel): Boolean

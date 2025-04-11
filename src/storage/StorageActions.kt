@@ -1,6 +1,6 @@
 package storage
 
-import mangers.TranasctionManger.TransactionModel
+import mangers.transaction.TransactionModel
 
 interface StorageActions {
     fun read(): List<TransactionModel>

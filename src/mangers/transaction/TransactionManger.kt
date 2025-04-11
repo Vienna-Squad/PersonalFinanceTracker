@@ -1,10 +1,8 @@
 package mangers.transaction
 
-import mangers.TranasctionManger.TransactionModel
 
 class TransactionManger : Transaction {
 
-    // Todo : replace by storage
     private val transactions = mutableListOf<TransactionModel>()
 
     override fun addTransaction(transactionModel: TransactionModel): Boolean {
@@ -29,7 +27,4 @@ class TransactionManger : Transaction {
     override fun getTransactionById(id: Int): TransactionModel? {
         return transactions.firstOrNull { it.id == id }
     }
-
-
-
 }
