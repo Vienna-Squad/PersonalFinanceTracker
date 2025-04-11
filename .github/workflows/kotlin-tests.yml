@@ -25,7 +25,6 @@ jobs:
 
       - name: Compile Kotlin code
         run: |
-          kotlinc src/TestRunner.kt src/Test.kt src/mangers/transaction/TransactionManger.kt src/mangers/report/ReportManger.kt src/mangers/transaction/TransactionType.kt src/utils/Validator.kt -include-runtime -d out.jar
-
+          kotlinc src/TestRunner.kt 
       - name: Run Tests
         run: java -jar out.jar
