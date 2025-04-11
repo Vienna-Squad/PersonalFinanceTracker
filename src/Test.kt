@@ -201,18 +201,18 @@ class Test() {
 
         check(
             name = ("Check for wrong amount"),
-            expectedResult = calculatorReport.calculateExpensesReport().result,
+            expectedResult = calculatorReport.generateExpensesReport().result,
             correctResult = 400.0
         )
         check(
             name = ("Check for invalid Transaction list Size"),
-            expectedResult = calculatorReport.calculateExpensesReport().transactions.size,
+            expectedResult = calculatorReport.generateExpensesReport().transactions.size,
             correctResult = 5
         )
 
         check(
             name = ("Empty mangers.transaction list"),
-            expectedResult = calculatorReport.calculateExpensesReport().transactions.size,
+            expectedResult = calculatorReport.generateExpensesReport().transactions.size,
             correctResult = 0,
         )
 
@@ -243,12 +243,12 @@ class Test() {
 //region valid transactions
         check(
             name = "Valid Summary Filtered By Month Transactions ",
-            expectedResult = calculator.calculateSummaryOfMonthReport(4).transactions.size,
+            expectedResult = calculator.generateSummaryOfMonthReport(4).transactions.size,
             correctResult = dummytransactions.size
         )
         check(
             name = "Valid Calculated Balance of Income & Expense ",
-            expectedResult = calculator.calculateSummaryOfMonthReport(4).result,
+            expectedResult = calculator.generateSummaryOfMonthReport(4).result,
             correctResult = 500.0
         )
 //endregion
@@ -281,7 +281,7 @@ class Test() {
         //invalid
         check(
             name = "Wrong output of  Filtered By Month Transactions ",
-            expectedResult = calculator2.calculateSummaryOfMonthReport(4).transactions.size,
+            expectedResult = calculator2.generateSummaryOfMonthReport(4).transactions.size,
             correctResult = 3
         )
         //endregion
