@@ -75,11 +75,17 @@ class App {
                 }
 
                 MenuItem.VIEW -> {
-
-                    transactionManager.getAllTransactions().forEach {
-                        printBlueText(it.toString())
+                    val transactions = transactionManager.getAllTransactions()
+                    if (transactions.isNotEmpty()) {
+                        transactionManager.getAllTransactions().forEach {
+                            printBlueText(it.toString())
+                        }
+                        println()
+                    } else {
+                        printRedText("there are no transactions!!\n")
                     }
-                    println()
+
+
                 }
 
                 MenuItem.SUMMARY -> {
