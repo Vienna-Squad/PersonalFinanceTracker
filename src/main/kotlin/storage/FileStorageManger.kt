@@ -8,6 +8,10 @@ import java.io.File
 class FileStorageManger : Storage {
 
     private val file: File = File(FILE_NAME)
+    private val json = Json {
+        prettyPrint = true
+        encodeDefaults = true
+    }
 
     init {
         if (!file.exists()) {
@@ -18,7 +22,7 @@ class FileStorageManger : Storage {
     override fun read(): List<TransactionModel> {
         val content = file.readText()
         if (content.isNotBlank()) {
-            val transactions = Json.decodeFromString<List<TransactionModel>>(content)
+            val transactions = json.decodeFromString<List<TransactionModel>>(content)
             IdGenerator.setInitialValue(transactions.lastOrNull()?.id?.plus(1) ?: 0)
             return transactions
         } else {
@@ -28,7 +32,7 @@ class FileStorageManger : Storage {
     }
 
     override fun write(transactions: List<TransactionModel>) {
-        file.writeText(Json.encodeToString(transactions))
+        file.writeText(json.encodeToString(transactions))
     }
 
     companion object {
