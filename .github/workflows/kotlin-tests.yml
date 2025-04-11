@@ -25,6 +25,6 @@ jobs:
 
       - name: Compile Kotlin code
         run: |
-          kotlinc kotlinc src/TestRunner.kt -include-runtime -d out.jar
+         kotlinc src/TestRunner.kt -include-runtime -d out.jar
       - name: Run Tests
         run: java -jar out.jar
