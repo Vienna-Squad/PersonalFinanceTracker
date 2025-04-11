@@ -1,6 +1,7 @@
 package mangers.transaction
 
 import utils.IdGenerator
+import java.io.Serializable
 import java.time.LocalDate
 
 data class TransactionModel(
@@ -9,7 +10,7 @@ data class TransactionModel(
     val amount: Double,
     val category: String,
     val type: TransactionType
-) {
+):Serializable {
     override fun toString(): String {
         return "$id | $date | $category | $amount | $type"
     }
