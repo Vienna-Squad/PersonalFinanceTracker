@@ -16,3 +16,5 @@ data class TransactionModel(
 }
 
 enum class TransactionType { INCOME, EXPENSE }
+
+

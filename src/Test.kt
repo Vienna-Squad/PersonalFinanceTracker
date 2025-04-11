@@ -2,6 +2,7 @@ import mangers.transaction.TransactionModel
 import mangers.transaction.TransactionType
 import mangers.report.ReportManger
 import mangers.transaction.TransactionManger
+import storage.FileStorageManger
 import utils.Validator
 import java.time.LocalDate
 
@@ -152,7 +153,7 @@ class Test {
             )
             //endregion
             //region calculateIncomesReport
-            val calculatorReport = ReportManger(TransactionManger())
+            val calculatorReport = ReportManger(TransactionManger(FileStorageManger()))
             check(
                 name = ("Check for valid Transaction list Size"),
                 expectedResult = calculatorReport.calculateIncomesReport().transactions.size,
@@ -205,7 +206,7 @@ class Test {
                     type = TransactionType.EXPENSE
                 )
             )
-            val calculator = ReportManger(TransactionManger())
+            val calculator = ReportManger(TransactionManger(FileStorageManger()))
             check(
                 name = "Valid Summary Filtered By Month Transactions ",
                 expectedResult = calculator.generateSummaryOfMonthReport(4).transactions.size,
@@ -216,7 +217,7 @@ class Test {
                 expectedResult = calculator.generateSummaryOfMonthReport(4).result,
                 correctResult = 500.0
             )
-            val calculator2 = ReportManger(TransactionManger())
+            val calculator2 = ReportManger(TransactionManger(FileStorageManger()))
             check(
                 name = "Wrong output of  Filtered By Month Transactions ",
                 expectedResult = calculator2.generateSummaryOfMonthReport(4).transactions.size,
@@ -232,7 +233,7 @@ class Test {
                 category = "Salary",
                 type = TransactionType.INCOME
             )
-            val transactionMangerTest = TransactionManger()
+            val transactionMangerTest = TransactionManger(FileStorageManger())
             transactionMangerTest.addTransaction(transactionModelTest)
 
             if (transactionModelTest !in transactionMangerTest.getAllTransactions())

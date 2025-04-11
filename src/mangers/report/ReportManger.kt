@@ -37,4 +37,5 @@ class ReportManger(private val transactionManger: Transaction): Report {
         )
         return monthlySummary
     }
+
 }
