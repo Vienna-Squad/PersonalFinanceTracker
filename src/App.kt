@@ -5,6 +5,7 @@ import mangers.report.ReportManger
 import mangers.transaction.Transaction
 import mangers.report.ReportModel
 import mangers.transaction.TransactionManger
+import storage.FileStorageManger
 import utils.MenuItem
 import utils.Validator.isValidAmount
 import utils.Validator.isValidCategory
@@ -15,7 +16,8 @@ import utils.toMenuItem
 
 class App {
 
-    private val transactionManager: Transaction = TransactionManger()
+    private val fileStorage = FileStorageManger()
+    private val transactionManager: Transaction = TransactionManger(fileStorage)
     private val reportManger: Report = ReportManger(transactionManager)
 
     fun start() {
@@ -102,6 +104,8 @@ class App {
                 MenuItem.EXIT -> {}
             }
         } while (selectedAction != MenuItem.EXIT)
+        print("Your Transactions added to File")
+        transactionManager.saveTransactionsToFileStorage()
     }
 
     private fun getTransactionFromUser(): TransactionModel? {

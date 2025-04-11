@@ -1,0 +1,2 @@
+0 | 2025-04-11 | real madrid | 12933.0 | INCOME
+0 | 2025-04-11 | lkadsf | 33344.0 | INCOME
