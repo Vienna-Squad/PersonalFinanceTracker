@@ -14,23 +14,24 @@ class ReportManger(private val transactionManger: Transaction): Report {
         return ReportModel(incomes, totalIncome,title)
     }
 
-    override fun calculateExpensesReport(): ReportModel {
+    override fun generateExpensesReport(): ReportModel {
         val title  = "Total of expenses"
         val expenses = transactionManger.getAllTransactions().filter { it.type == TransactionType.EXPENSE }
         val totalExpense = expenses.sumOf { it.amount }
         return ReportModel(expenses, totalExpense,title)
     }
 
-    override fun calculateSummaryOfMonthReport(month: Int): ReportModel {
-        var monthTotalSum = 00.0
-        for (transaction in transactionManger.getAllTransactions()) {
-            if (transaction.type == TransactionType.INCOME) monthTotalSum += transaction.amount
-            else monthTotalSum -= transaction.amount
-        }
+    override fun generateSummaryOfMonthReport(month: Int): ReportModel {
+        var totalSum = 00.0
+
         val monthlyFilterList = transactionManger.getAllTransactions().filter { it.date.monthValue == month }
+        for (transaction in monthlyFilterList) {
+            if (transaction.type == TransactionType.INCOME) totalSum += transaction.amount
+            else totalSum -= transaction.amount
+        }
         val monthlySummary = ReportModel(
             monthlyFilterList,
-            monthTotalSum,
+            totalSum,
             "Summary of ${LocalDate.now().month} Transactions "
 
         )

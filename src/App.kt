@@ -6,7 +6,6 @@ import mangers.transaction.Transaction
 import mangers.report.ReportModel
 import mangers.transaction.TransactionManger
 import utils.MenuItem
-import utils.Validator
 import utils.Validator.isValidAmount
 import utils.Validator.isValidCategory
 import utils.Validator.isValidId
@@ -85,7 +84,7 @@ class App() {
                     if (monthNumber == null) {
                         println("\u001B[31minvalid input!!\u001B[0m\n")
                     } else {
-                        val report = reportManger.calculateSummaryOfMonthReport(monthNumber)
+                        val report = reportManger.generateSummaryOfMonthReport(monthNumber)
                         printReport(report)
                     }
                 }
@@ -96,7 +95,7 @@ class App() {
                 }
 
                 MenuItem.EXPENSES -> {
-                    val report = reportManger.calculateExpensesReport()
+                    val report = reportManger.generateExpensesReport()
                     printReport(report)
                 }
 
