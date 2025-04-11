@@ -19,8 +19,19 @@ class FileStorageManger : Storage {
     }
 
     override fun read(): List<TransactionModel> {
+        if (file.length() == 0L) {
+            // Empty file; set default ID
+            IdGenerator.setInitialValue(DEFAULT_ID_VALUE)
+            return emptyList()
+        }
+
         ObjectInputStream(file.inputStream()).use { input ->
-            return input.readObject() as List<TransactionModel>
+            val transactions = input.readObject() as List<TransactionModel>
+            // Set the ID generator to one higher than the last transaction ID
+            IdGenerator.setInitialValue(
+                transactions.lastOrNull()?.id?.plus(ID_INCREMENT) ?: DEFAULT_ID_VALUE
+            )
+            return transactions
         }
     }
 
@@ -28,6 +39,11 @@ class FileStorageManger : Storage {
         ObjectOutputStream(file.outputStream()).use { output ->
             output.writeObject(transactions)
         }
+    }
+
+    companion object {
+        private const val ID_INCREMENT = 1
+        private const val DEFAULT_ID_VALUE = 0
     }
 
 }
