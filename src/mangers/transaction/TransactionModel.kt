@@ -2,7 +2,7 @@ package mangers.transaction
 
 import utils.IdGenerator
 import java.time.LocalDate
-
+import java.io.Serializable
 data class TransactionModel(
     val id: Int = IdGenerator.getNextInt(),
     val date: LocalDate = LocalDate.now(),
@@ -15,4 +15,4 @@ data class TransactionModel(
     }
 }
 
-enum class TransactionType { INCOME, EXPENSE }
+
