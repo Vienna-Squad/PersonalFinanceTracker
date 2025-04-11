@@ -75,6 +75,7 @@ class App {
                 }
 
                 MenuItem.VIEW -> {
+
                     transactionManager.getAllTransactions().forEach {
                         printBlueText(it.toString())
                     }

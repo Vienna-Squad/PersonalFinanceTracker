@@ -2,6 +2,7 @@ package storage
 
 import mangers.transaction.TransactionModel
 import mangers.transaction.TransactionType
+import utils.IdGenerator
 import java.io.File
 import java.time.LocalDate
 
@@ -27,6 +28,8 @@ class FileStorageManger : Storage {
             )
             transactions.add(item)
         }
+        IdGenerator.setInitialValue(transactions.lastOrNull()?.id?.plus(1)?:0)
+
         return transactions
     }
 
