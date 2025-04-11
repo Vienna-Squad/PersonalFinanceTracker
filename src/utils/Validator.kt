@@ -1,6 +1,6 @@
 package utils
 
-import mangers.TranasctionManger.TransactionType
+import mangers.transaction.TransactionType
 
 object Validator {
     fun isValidTransactionType(input: String): Boolean {

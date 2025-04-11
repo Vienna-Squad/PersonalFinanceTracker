@@ -1,10 +1,11 @@
-import mangers.TranasctionManger.TransactionModel
-import mangers.TranasctionManger.TransactionType
+import mangers.transaction.TransactionModel
+import mangers.transaction.TransactionType
 import mangers.report.Report
 import mangers.report.ReportManger
 import mangers.transaction.Transaction
 import mangers.report.ReportModel
 import mangers.transaction.TransactionManger
+import storage.FileStorageManger
 import utils.MenuItem
 import utils.Validator.isValidAmount
 import utils.Validator.isValidCategory
@@ -13,9 +14,10 @@ import utils.Validator.isValidMonthNumber
 import utils.Validator.isValidTransactionType
 import utils.toMenuItem
 
-class App() {
+class App {
 
-    private val transactionManager: Transaction = TransactionManger()
+    private val fileStorage = FileStorageManger()
+    private val transactionManager: Transaction = TransactionManger(fileStorage)
     private val reportManger: Report = ReportManger(transactionManager)
 
     fun start() {
@@ -23,17 +25,17 @@ class App() {
             MenuItem.entries.forEachIndexed { index, action ->
                 println("${index + 1}- ${action.title}")
             }
-            print("please choose action *\u001B[33menter (8) or anything else to exit\u001B[0m*: ")
+            print("choose the action \u001B[33m*enter (8) or anything else to exit*\u001B[0m: ")
             val selectedAction = (readln().toIntOrNull() ?: -1).toMenuItem()
             println()
             when (selectedAction) {
                 MenuItem.ADD -> {
                     val transaction = getTransactionFromUser()
                     if (transaction == null) {
-                        println("\u001B[31minvalid input!!\u001B[0m\n")
+                        printRedText("invalid input!!\n")
                     } else {
                         transactionManager.addTransaction(transaction)
-                        println("transaction #${transaction.id} added!!\n")
+                        printGreenText("#${transaction.id} transaction added!!\n")
 
                     }
                 }
@@ -41,19 +43,19 @@ class App() {
                 MenuItem.UPDATE -> {
                     val transactionId = getTransactionIdFromUser()
                     if (transactionId == null) {
-                        println("\u001B[31minvalid input!!\u001B[0m\n")
+                        printRedText("invalid input!!\n")
                         return
                     }
                     val oldTransaction = transactionManager.getTransactionById(id = transactionId)
                     if (oldTransaction == null) {
-                        println("\u001B[31mtransaction not found!!\u001B[0m\n")
+                        printRedText("transaction not found!!\n")
                     } else {
                         val newTransaction = getUpdatedTransactionFromUser(oldTransaction)
                         if (newTransaction != null) {
                             transactionManager.updateTransaction(newTransaction)
-                            println("transaction #$transactionId updated!!\n")
+                            printGreenText("#$transactionId transaction updated!!\n")
                         } else {
-                            println("\u001B[31minvalid input!!\u001B[0m\n")
+                            printRedText("invalid input!!\n")
                         }
                     }
                 }
@@ -61,20 +63,21 @@ class App() {
                 MenuItem.DELETE -> {
                     val transactionId = getTransactionIdFromUser()
                     if (transactionId == null) {
-                        println("\u001B[31minvalid input!!\u001B[0m\n")
+                        printRedText("invalid input!!\n")
                     } else {
                         val isDeleted = transactionManager.deleteTransaction(transactionId)
                         if (isDeleted) {
-                            println("#$transactionId transaction  deleted!!\n")
+                            printGreenText("#$transactionId transaction  deleted!!\n")
                         } else {
-                            println("\u001B[31mtransaction not found!!\u001B[0m\n")
+                            printRedText("transaction not found!!\n")
                         }
                     }
                 }
 
                 MenuItem.VIEW -> {
+
                     transactionManager.getAllTransactions().forEach {
-                        println(it)
+                        printBlueText(it.toString())
                     }
                     println()
                 }
@@ -82,7 +85,7 @@ class App() {
                 MenuItem.SUMMARY -> {
                     val monthNumber = getMonthFromUser()
                     if (monthNumber == null) {
-                        println("\u001B[31minvalid input!!\u001B[0m\n")
+                        printRedText("invalid input!!\n")
                     } else {
                         val report = reportManger.generateSummaryOfMonthReport(monthNumber)
                         printReport(report)
@@ -102,21 +105,23 @@ class App() {
                 MenuItem.EXIT -> {}
             }
         } while (selectedAction != MenuItem.EXIT)
+        print("Your Transactions added to File")
+        transactionManager.saveTransactionsToFileStorage()
     }
 
     private fun getTransactionFromUser(): TransactionModel? {
         TransactionType.entries.forEachIndexed { index, transactionType ->
             print("${index + 1}- $transactionType\t")
         }
-        print("\nplease enter the transaction type: ")
+        print("\nenter the transaction type: ")
         var input: String = readln()
         if (!isValidTransactionType(input)) return null
         val type = TransactionType.entries[input.toInt() - 1]
-        print("please enter the category of transaction: ")
+        print("enter the category of transaction: ")
         input = readln()
         if (!isValidCategory(input)) return null
         val category = input
-        print("please enter the amount of transaction: ")
+        print("enter the amount of transaction: ")
         input = readln()
         if (!isValidAmount(input)) return null
         val amount = input.toDouble()
@@ -124,25 +129,23 @@ class App() {
     }
 
     private fun getTransactionIdFromUser(): Int? {
-        print("Enter transaction index: ")
+        print("enter transaction index: ")
         val input = readln()
         if (!isValidId(input)) return null
         return input.toInt()
     }
 
     private fun getMonthFromUser(): Int? {
-        print("Enter the month as a number: ")
+        print("enter the month as a number: ")
         val input = readln()
         if (!isValidMonthNumber(input)) return null
         return input.toInt()
     }
 
     private fun getUpdatedTransactionFromUser(old: TransactionModel): TransactionModel? {
-        println("Press Enter to keep the current value.")
         val type = getUpdatedType(old.type) ?: return null
         val category = getUpdatedCategory(old.category) ?: return null
         val amount = getUpdatedAmount(old.amount) ?: return null
-        println("\u001B[32mTransaction updated successfully.\u001B[0m")
         return old.copy(category = category, amount = amount, type = type)
     }
 
@@ -150,7 +153,7 @@ class App() {
         TransactionType.entries.forEachIndexed { i, type ->
             print("${i + 1}-$type\t")
         }
-        print("\nEnter the type number or press Enter to keep current [${old.name}]: ")
+        print("\nenter the type number or \u001B[33mpress (Enter) to keep current [${old.name}]\u001B[0m: ")
         val input = readln()
         if (input.isBlank()) {
             return old
@@ -162,7 +165,7 @@ class App() {
     }
 
     private fun getUpdatedCategory(old: String): String? {
-        print("Enter the new category or press Enter to keep current [${old}]: ")
+        print("enter the new category or \u001B[33mpress (Enter) to keep current [${old}]\u001B[0m: ")
         val input = readln()
         if (input.isBlank()) {
             return old
@@ -174,7 +177,7 @@ class App() {
     }
 
     private fun getUpdatedAmount(old: Double): Double? {
-        print("Enter the new amount or press Enter to keep current [${old}]: ")
+        print("enter the new amount or \u001B[33mpress (Enter) to keep current [${old}]\u001B[0m: ")
         val input = readln()
         if (input.isBlank()) {
             return old
@@ -187,15 +190,29 @@ class App() {
 
     private fun printReport(report: ReportModel) {
         if (report.transactions.isNotEmpty()) {
-            println("title: ${report.title} --- total: ${report.result}")
+            printBlueText("title: ${report.title}\ntotal: ${report.result}")
             report.transactions.forEach {
-                println(it)
+                printBlueText("$it")
             }
+            println()
         } else {
-            println("no transactions at this month!!")
+            printRedText("no transactions at this month!!\n")
         }
-
     }
+
+
+    private fun printGreenText(text: String) {
+        println("\u001B[32m$text\u001B[0m")
+    }
+
+    private fun printRedText(text: String) {
+        println("\u001B[31m$text\u001B[0m")
+    }
+
+    private fun printBlueText(text: String) {
+        println("\u001B[34m$text\u001B[0m")
+    }
+
 }
 
 

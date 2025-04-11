@@ -1,6 +1,6 @@
 package mangers.report
 
-import mangers.TranasctionManger.TransactionType
+import mangers.transaction.TransactionType
 import mangers.transaction.Transaction
 
 import java.time.LocalDate
@@ -37,4 +37,5 @@ class ReportManger(private val transactionManger: Transaction): Report {
         )
         return monthlySummary
     }
+
 }

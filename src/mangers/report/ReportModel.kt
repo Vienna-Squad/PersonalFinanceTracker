@@ -1,6 +1,6 @@
 package mangers.report
 
-import mangers.TranasctionManger.TransactionModel
+import mangers.transaction.TransactionModel
 
 data class ReportModel(
     val transactions: List<TransactionModel> = emptyList(),

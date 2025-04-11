@@ -1,11 +1,17 @@
 package mangers.transaction
 
-import mangers.TranasctionManger.TransactionModel
+import storage.Storage
 
-class TransactionManger : Transaction {
 
-    // Todo : replace by storage
+class TransactionManger(
+    private val storageManger: Storage
+) : Transaction {
+
     private val transactions = mutableListOf<TransactionModel>()
+
+    init {
+        transactions.addAll(storageManger.read())
+    }
 
     override fun addTransaction(transactionModel: TransactionModel): Boolean {
         return transactions.add(transactionModel)
@@ -30,6 +36,8 @@ class TransactionManger : Transaction {
         return transactions.firstOrNull { it.id == id }
     }
 
-
+    override fun saveTransactionsToFileStorage(){
+        storageManger.write(transactions)
+    }
 
 }

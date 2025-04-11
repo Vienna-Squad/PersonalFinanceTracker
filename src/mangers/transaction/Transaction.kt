@@ -1,7 +1,5 @@
 package mangers.transaction
 
-import mangers.TranasctionManger.TransactionModel
-
 
 interface Transaction {
     fun addTransaction(transactionModel: TransactionModel): Boolean
@@ -9,4 +7,5 @@ interface Transaction {
     fun updateTransaction(transactionModel: TransactionModel): Boolean
     fun getAllTransactions(): List<TransactionModel>
     fun getTransactionById(id: Int): TransactionModel?
+    fun saveTransactionsToFileStorage()
 }
