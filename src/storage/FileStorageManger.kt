@@ -4,6 +4,8 @@ import mangers.transaction.TransactionModel
 import mangers.transaction.TransactionType
 import utils.IdGenerator
 import java.io.File
+import java.io.ObjectInputStream
+import java.io.ObjectOutputStream
 import java.time.LocalDate
 
 class FileStorageManger : Storage {
@@ -15,28 +17,33 @@ class FileStorageManger : Storage {
             file.createNewFile()
         }
     }
-    override fun read(): List<TransactionModel> {
-        val transactions = mutableListOf<TransactionModel>()
-        file.readLines().forEach { line ->
-            val newline = line.split(" | ")
-            val item = TransactionModel(
-                id = newline[0].toInt(),
-                date = LocalDate.parse(newline[1]),
-                category = newline[2],
-                amount = newline[3].toDouble(),
-                type = TransactionType.valueOf(newline[4])
-            )
-            transactions.add(item)
-        }
-        IdGenerator.setInitialValue(transactions.lastOrNull()?.id?.plus(1)?:0)
 
-        return transactions
+    override fun read(): List<TransactionModel> {
+        if (file.length() == 0L) {
+            // Empty file; set default ID
+            IdGenerator.setInitialValue(DEFAULT_ID_VALUE)
+            return emptyList()
+        }
+
+        ObjectInputStream(file.inputStream()).use { input ->
+            val transactions = input.readObject() as List<TransactionModel>
+            // Set the ID generator to one higher than the last transaction ID
+            IdGenerator.setInitialValue(
+                transactions.lastOrNull()?.id?.plus(ID_INCREMENT) ?: DEFAULT_ID_VALUE
+            )
+            return transactions
+        }
     }
 
     override fun write(transactions: List<TransactionModel>) {
-        val stringBuilderFile: StringBuilder = StringBuilder()
-        transactions.forEach { item -> stringBuilderFile.append("$item\n") }
-        file.writeText(stringBuilderFile.toString())
+        ObjectOutputStream(file.outputStream()).use { output ->
+            output.writeObject(transactions)
+        }
+    }
+
+    companion object {
+        private const val ID_INCREMENT = 1
+        private const val DEFAULT_ID_VALUE = 0
     }
 
 }
